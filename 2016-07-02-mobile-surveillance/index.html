@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+	<title>Mobile Surveillance</title>
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css" id="theme">
+	<link rel="stylesheet" href="css/extras.css">
+
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <style type="text/css">
+    pre.bigcode { text-align: left; font-size: 0.8em }
+    pre.medcode { text-align: left; font-size: 0.7em }
+    #speaker-controls { font-size: 0.3em }
+    .present ul li { margin-bottom: 0.5em }
+    .reveal pre code {
+      overflow: visible;
+      word-wrap: break-word;
+    }
+  </style>
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section data-markdown data-separator-notes="^Note:">
+# Mobile Surveillance
+
+## Or, why we can call cell phones "tracking devices"
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Continuously tracking
+
+Mobile phones continuously transmit and register with the nearest base station.
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Signals transmitted over short ranges include:
+- GPS
+- Wifi
+- Bluetooth
+
+These constant “pings” cannot be turned off (even if a phone is in airplane mode)
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## So, how is this used for physical surveillance?
+
+</section>
+
+<section data-separator-notes="^Note:">
+<h2>Six main legal surveillance methods in the U.S. </h2>
+
+<ol>
+  <li> Call Detail Record requests </li>
+  <li> Pen register/trap and trace </li>
+  <li> Content wiretaps </li>
+  <li>E911 pings </li>
+  <li> Tower dumps </li>
+  <li> Stingray/IMSI catchers </li>
+</ol>
+
+<p class="citation"> source: Matt Blaze, http://www.crypto.com/blog/celltapping/ </p>
+
+</section>
+
+<section>
+<h2>Real time Call Detail Records (CDRs)</h2>
+
+<img width="70%" src="images/cdr.png">
+
+<p class="citation"> source: Polycom, http://documents.polycom.com/documents/video/platform-uc-infrastructure/realpresence-collaboration-server/realpresence-collaboration-server-rmx-15-43
+</p>
+
+<aside class="notes">
+Note:
+Source: Matt Blaze, http://www.crypto.com/blog/celltapping/
+"Call detail records" ("CDRs") are the official billing records for a telephone company about call activity -- the incoming/outgoing calls made and received.
+
+These records include: date/time, number dialed or called from, length of call, whether the call was completed.
+
+CDRS will also identify the cellular "base station" that serviced the call for mobile calls (therefore revealing location at the time of the call).
+
+CDRs do not record the voice content of phone calls, but SMS messaging text is sometimes stored.
+
+Every call made or received generates a CDR record
+
+Data services, such as SMS messaging and Internet access, also generate CDRs.
+For example, when apps on your phone access the Internet without explicit action by you, these are also generating CDRS even though you are not actively using your phone.
+
+CDRS are stored anywhere for a couple years to forever, depending on company policy (no regulations on this).
+
+This is _retroactive_ action- investigators can see the action of a user even before they came to the attention of the authorities. 
+
+</aside>
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Call Detail Records (CDRs)
+
+Each year, over a million CDRs are requested by the police, and have been used as evidence in court cases about the location of a suspect at a particular time.
+
+Information in a CDR:
+
+- Location (of connected cell tower)
+- Number of the caller and receiver
+- Number of the receiver
+- Billing information for the originating number
+- Call duration
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Pen register/ Trap and Trace
+
+- CDRs reveal past behavior.
+- However, the same information in a CDR can be delivered in real time.
+- Phone company switches are required to include a "lawful access" interface, that can deliver call information in real time.
+- Also known as the "CALEA interface" or "J-STD-25 interface."
+- Includes cell site information, revealing location in real time.
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Cell location & E911 Pings
+
+- Your phone continuously scans for and registers with the closest base station
+- The last base station you connected to is stored in a central database
+- This information can be delivered in real time to law enforcement on a continous basis
+- Current phones are required to have the capacity to calculate location within a few meters (for 911 calls)
+
+</section>
+
+<section>
+<h3>Cell phone tracking laws, U.S.</h3>
+
+<img width="57%" src="images/cell-phone-tracking-map.jpg">
+
+<p class="citation"> source: ACLU, https://www.aclu.org/map/cell-phone-location-tracking-laws-state </p>
+</section>
+
+<section data-separator-notes="^Note:">
+<h3>Cell tower simulators</h3>
+
+<img width="70%" src="images/how_stingrays_work.jpg">
+
+<p class="citation"> source: Wall Street Journal, http://blogs.wsj.com/digits/2011/09/21/how-stingray-devices-work/ </p>
+
+</section>
+
+<section data-separator-notes="^Note:">
+<h3>Where Stingray Operations are used</h3>
+
+<img src="images/stingray_tracking_device_map.jpg">
+
+<p class="citation"> source: ACLU, https://www.aclu.org/map/stingray-tracking-devices-whos-got-them#agencies </p>
+
+</section>
+
+<section data-separator-notes="^Note:">
+<h3>Cell tower dumps</h3>
+
+<img width="60%" src="images/tower-dump.jpg">
+
+<p class="citation"> source: USA Today, http://www.usatoday.com/story/news/nation/2013/12/08/cellphone-data-spying-nsa-police/3902809/</p>
+
+</section>
+
+<section data-separator-notes="^Note:">
+<h2> Cell tower dumps</h2>
+
+<ul>
+  <li>One in four law enforcement agencies have used this technique</li>
+  <li>Reveals the identity, location, and activity of thousands of people who connected to a cell tower at a particular date & time.</li>
+  <li>A typical dump contains multiple towers, wireless providers, and can net information from thousands of phones</li>
+</ul>
+
+<aside class="notes">
+Note:
+~ 1/4 law-enforcement agencies have used a "tower dump," giving police data about the identity, activity and location of any phone that connects to the targeted cellphone towers over a set span of time.
+
+A typical dump covers multiple towers, and wireless providers, and info from thousands of phones.
+
+Useful if law enforcement don't know a particular telephone number to ask for (i.e, they might want to identify potential suspects who were in a particular location at a specific time).
+
+A tower dump lists the CDRs for a particular base station over some time period. That is, it is effectively a list of all the telephones and call activity in an area at a particular time.
+
+</aside>
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## All of the above has been legal
+
+Of course, we also know there are covert operations to illegally compromise mobile communications as well.
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## One example we know of: Stealing SIM encryption keys (in the millions)
+
+<p class="citation"> source: The Intercept, https://theintercept.com/2015/02/19/great-sim-heist/ </p>
+
+Notes:
+<p class="citation"> source: The Intercept, https://theintercept.com/document/2015/02/19/pcs-harvesting-scale/ </p>
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Why is this effective?
+
+Your phone relies on symmetric cryptography. So your phone has a copy of a secret key, and your provider has the other.
+
+By stealing the secret key from the provider, all encrypted communication is able to be deciphered.
+
+<p class="citation"> source: A Few Thoughts on Cryptographic Engineering, http://blog.cryptographyengineering.com/2013/05/a-few-thoughts-on-cellular-encryption.html </p>
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## Conclusion
+
+- Lots of fundamentally things broken with phones
+- Problems like location tracking can't be fixed at a higher level
+
+</section>
+
+<section data-markdown data-separator-notes="^Note:">
+## P.S.
+
+- Should we give up on mobile altogether?
+- Is there anything that we can use phones safely for with higher-level solutions?
+
+</section>
+
+</div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+	controls: false,
+	progress: true,
+	history: true,
+	center: true,
+  slideNumber: true,
+	transition: 'slide', // none/fade/slide/convex/concave/zoom
+  width: "95%",
+	// Optional reveal.js plugins
+  dependencies: [
+		{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+		{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+		{ src: 'plugin/zoom-js/zoom.js', async: true },
+		{ src: 'plugin/notes/notes.js', async: true }
+	]
+});
+</script>
+
+</body>
+</html>
