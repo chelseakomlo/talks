@@ -1,7 +1,13 @@
 \documentclass{beamer}
 \usetheme{Boadilla}
 
-\graphicspath{ {images/} }
+\usepackage{amsthm, amsfonts, amssymb, amsmath, graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts, txfonts}
+\usepackage{wasysym}
+
+\usepackage{graphicx}
+\usepackage{tikz}
 
 \pgfdeclareimage[height=3ex]{crysplogo}{crysplogo}
 \pgfdeclareimage[height=3ex]{torlogo}{torlogo}
@@ -23,6 +29,8 @@ Group, University of Waterloo}}
 \date{\small USENIX Security, 13 August, 2020}
 
 \begin{document}
+\setbeamertemplate{itemize items}[triangle]
+
 \begin{frame}
         \thispagestyle{empty}
         \maketitle
@@ -31,20 +39,72 @@ Group, University of Waterloo}}
 
 \begin{frame}
 \frametitle{Motivation}
-Why anonymity networks are not scalable
-Why it is critical to scale them
+  \begin{itemize}
+    \item Design protocols that enable anonymity networks like Tor to scale
+      significantly beyond their current sizes.
+        \begin{itemize}
+          \item Add relays to network to increase capacity
+          \item While not increasing the overhead to clients to participate.
+        \end{itemize}
+    \item Do all of this in a way that does not change their existing security model
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Our Contributions}
+  \begin{itemize}
+    \item Walking Onions, a set of protocols that allows anonymity networks
+      like Tor to scale with constant-size overhead to users.
+    \item Walking Onions maintains the existing security model for Tor in one
+      variant, with a slight loss of forward secrecy in the other variant.
+    \item Demonstrates performance improvements at networks the size of Tor
+      today.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Outline}
+  \begin{enumerate}
+    \item Review of Current Tor and Performance Bottlenecks
+    \item Requirements to maintain similar security
+    \item Walking Onions
+    \item Comparison to current Tor
+      \begin{enumerate}
+        \item Security
+        \item Performance
+      \end{enumerate}
+  \end{enumerate}
 \end{frame}
 
 \begin{frame}
-\frametitle{What is Walking Onions?}
+  \centering
+  \huge
+  Current Tor
 \end{frame}
 
 \begin{frame}
-\frametitle{Why does it maintain Tor's existing security level?}
+\frametitle{Current Tor Security Model}
+
+Current Tor optimizes for security over scalability
+
+  \begin{itemize}
+    \item \textbf{Epistemic Attacks}
+    \item \textbf{Route-Capture Attacks}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Current Tor Scalability}
+
+Quadratic cost to client relative to number of relays.
+
+\end{frame}
+
+\begin{frame}
+  \centering
+  \huge
+  Walking Onions
 \end{frame}
 
 \begin{frame}
@@ -56,11 +116,56 @@ Why it is critical to scale them
 \end{frame}
 
 \begin{frame}
-\frametitle{Protocol Comparison}
+\frametitle{Why do these maintain Tor's existing security level?}
 \end{frame}
 
 \begin{frame}
-\frametitle{Performance Evaluation}
+\frametitle{}
+
+\begin{table}[t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Comparison: Telescoping, Single-Pass, Current Tor }
+
+\centering
+\footnotesize
+
+\CIRCLE=achieved; \Circle=not achieved;
+  \LEFTcircle=partially achieved
+
+$\Diamond$=performance property;
+  $\dagger$=security property
+
+    \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  & & Telescop. & Single-Pass & Current Tor \\
+  \hline
+  $\Diamond$ & Constant-size client download & \CIRCLE & \CIRCLE & \Circle \\
+  \hline
+  $\Diamond$ & One round trip per circuit built & \Circle & \CIRCLE & \Circle \\
+  % Start security properties
+  \hline
+  $\dagger$ & \raggedright Complete client control of relays selected & \LEFTcircle & \Circle & \CIRCLE \\
+  \hline
+  $\dagger$ & Forward-secret relay selection& \CIRCLE & \LEFTcircle & \CIRCLE \\
+  \hline
+  $\dagger$ & Forward secrecy for data & \CIRCLE & \CIRCLE & \CIRCLE \\
+  \hline
+  $\dagger$ & \raggedright Relays unaware of their positions in paths & \LEFTcircle & \Circle & \LEFTcircle \\
+  \hline
+\end{tabular}
+
+\end{table}
+\end{frame}
+
+
+\begin{frame}
+  \centering
+  \huge
+  Performance Evaluation
+\end{frame}
+
+\begin{frame}
+\frametitle{Simulation}
 Simulation description
 \end{frame}
 
