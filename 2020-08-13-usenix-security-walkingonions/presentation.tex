@@ -1,6 +1,18 @@
 \documentclass{beamer}
 \usetheme{Boadilla}
 
+\graphicspath{ {images/} }
+
+\pgfdeclareimage[height=3ex]{crysplogo}{crysplogo}
+\pgfdeclareimage[height=3ex]{torlogo}{torlogo}
+
+\titlegraphic{
+\raisebox{1ex}{
+\pgfuseimage{crysplogo}~~~
+\pgfuseimage{torlogo}
+}
+}
+
 
 \title{Walking Onions}
 \subtitle{Scaling Anonymity Networks while Protecting Users}
