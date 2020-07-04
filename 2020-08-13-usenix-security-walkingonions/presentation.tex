@@ -1,3 +1,5 @@
+% https://nymity.ch/tikz/
+
 \documentclass{beamer}
 \usetheme{Boadilla}
 
@@ -8,16 +10,34 @@
 
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{tikzpeople}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
 
 \pgfdeclareimage[height=3ex]{crysplogo}{crysplogo}
+\pgfdeclareimage[height=3ex]{cscslogo}{cscslogo}
 \pgfdeclareimage[height=3ex]{torlogo}{torlogo}
+\pgfdeclareimage[height=1.5ex]{clikey}{key}
+\pgfdeclareimage[height=1.5ex]{srvkey}{key-green}
+\pgfdeclareimage[height=1.5ex]{clivrfkey}{key-blue}
+\pgfdeclareimage[height=1.5ex]{srvvrfkey}{key-red}
 
 \titlegraphic{
 \raisebox{1ex}{
 \pgfuseimage{crysplogo}~~~
+\pgfuseimage{cscslogo}~~~
 \pgfuseimage{torlogo}
 }
 }
+
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{backbackground}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{backbackground,background,main,foreground}   %% some additional layers for demo
+
+\usetikzlibrary{shapes,decorations.shapes}
+\tikzset{>=latex}
 
 
 \title{Walking Onions}
@@ -109,10 +129,27 @@ Quadratic cost to client relative to number of relays.
 
 \begin{frame}
 \frametitle{Vanilla Walking Onions}
+\begin{tikzpicture}
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-.5) {};
+
+  \begin{pgfonlayer}{background}
+
+    \node[circle,draw,minimum size=1.5cm] (R1) at (6.5, -.5) {$R_n$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10, -.5) {$R_{n+1}$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -.5) {$R_{n+2}$};
+
+  \end{pgfonlayer}
+    \draw<1>[line width=2pt,->] (user1.east) -- (R1.west) node [above,midway]
+    {Extend 1 $\pgfuseimage{clikey}_1$};
+    \draw<2>[line width=2pt,->] (R1.east) -- (R2.west) node [above,midway]
+    {Extend $\pgfuseimage{clikey}_1$};
+
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
 \frametitle{Telescoping Walking Onions}
+
 \end{frame}
 
 \begin{frame}
