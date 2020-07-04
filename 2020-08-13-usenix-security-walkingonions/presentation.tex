@@ -219,64 +219,41 @@ Quadratic cost to client relative to number of relays.
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {Create $\pgfuseimage{clikey}_1$};
 
-    \draw<2>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    \draw<2->[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
     [below, midway] {};
     \draw<2>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_1$};
 
-    \draw<3>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
     \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {5 $\pgfuseimage{clikey}_1$};
 
-    \draw<4>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
     \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {$\pgfuseimage{clikey}_1$};
 
 
-    \draw<5>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
-    \draw<5>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_1$};
 
-    \draw<6>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
-    \draw<6>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_5$, $\snipdoc_{R_5}$};
 
-    \draw<7>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
-    \draw<7>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {3 $\pgfuseimage{clikey}_1$};
 
-    \draw<8>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
-    \draw<8>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {3 $\pgfuseimage{clikey}_1$};
 
-    \draw<9>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
-    \draw<9>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<9>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
     {$\pgfuseimage{clikey}_1$};
 
-    \draw<10>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
-    \draw<10>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
-    \draw<10>[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
     \draw<10>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
     {$\pgfuseimage{srvkey}_3$};
 
-    \draw<11>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
-    \draw<11>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
-    \draw<11>[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
     \draw<11>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_3$, $\snipdoc_{R_3}$};
 
-    \draw<12>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
-    \draw<12>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
-    \draw<12>[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
     \draw<12>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_3$, $\snipdoc_{R_3}$};
 
