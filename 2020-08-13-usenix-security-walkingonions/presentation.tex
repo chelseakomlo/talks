@@ -1,12 +1,13 @@
 % https://nymity.ch/tikz/
 
-\documentclass{beamer}
+\documentclass[hyperref={pdfpagelabels=true},table,dvipsnames,14pt,aspectratio=169]{beamer}
 \usetheme{Boadilla}
 
 \usepackage{amsthm, amsfonts, amssymb, amsmath, graphicx}
 \usepackage{amsmath}
 \usepackage{amsfonts, txfonts}
 \usepackage{wasysym}
+\usepackage{xcolor}
 
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -14,9 +15,9 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.15}
 
-\pgfdeclareimage[height=3ex]{crysplogo}{crysplogo}
-\pgfdeclareimage[height=3ex]{cscslogo}{cscslogo}
-\pgfdeclareimage[height=3ex]{torlogo}{torlogo}
+\pgfdeclareimage[height=5ex]{crysplogo}{crysplogo}
+\pgfdeclareimage[height=5ex]{cscslogo}{cscslogo}
+\pgfdeclareimage[height=5ex]{torlogo}{torlogo}
 \pgfdeclareimage[height=1.5ex]{clikey}{key}
 \pgfdeclareimage[height=1.5ex]{srvkey}{key-green}
 \pgfdeclareimage[height=1.5ex]{clivrfkey}{key-blue}
@@ -30,6 +31,14 @@
 }
 }
 
+\definecolor{AlertRed}{rgb}{1.0,0.125,0.25}
+\setbeamercolor{alerted text}{fg=AlertRed}
+%\setbeamerfont{alerted text}{shape=\bfseries,size=\huge}
+\definecolor{auth}{RGB}{138,23,94}
+
+\newcommand\snipdoc{\begin{tikzpicture}[scale=.25] \draw[-,draw=black,fill=LimeGreen] (0,0) -- (2,0) -- (2,-2) -- (-1,-2) -- (-1,-1) -- cycle; \node[shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=2mm,anchor=south east] at (1.8,-1.8) {} ; \end{tikzpicture}}
+\newcommand\docendive{\begin{tikzpicture}[scale=.25] \draw[-,draw=black,fill=ForestGreen] (0,0) -- (2,0) -- (2,-11) -- (-1,-11) -- (-1,-1) -- cycle; \node[shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=2mm,anchor=south east] at (1.8,-10.8) {} ; \end{tikzpicture}}
+
 
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{backbackground}
@@ -42,9 +51,7 @@
 
 \title{Walking Onions}
 \subtitle{Scaling Anonymity Networks while Protecting Users}
-\author[Chelsea Komlo]{Chelsea H. Komlo\\{\footnotesize
-Cryptography, Security, and Privacy (CrySP) Research
-Group, University of Waterloo}}
+\author[Chelsea Komlo]{Chelsea H. Komlo}
 \institute{\small Joint work with Nick Mathewson, Ian Goldberg}
 \date{\small USENIX Security, 13 August, 2020}
 
@@ -128,21 +135,88 @@ Quadratic cost to client relative to number of relays.
 \end{frame}
 
 \begin{frame}
+\frametitle{New Data Structures}
+ENDIVEs and SNIPs
+\end{frame}
+
+\begin{frame}
 \frametitle{Vanilla Walking Onions}
 \begin{tikzpicture}
-  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-.5) {};
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
 
   \begin{pgfonlayer}{background}
 
-    \node[circle,draw,minimum size=1.5cm] (R1) at (6.5, -.5) {$R_n$};
-    \node[circle,draw,minimum size=1.5cm] (R2) at (10, -.5) {$R_{n+1}$};
-    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -.5) {$R_{n+2}$};
+    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1.5) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
 
   \end{pgfonlayer}
-    \draw<1>[line width=2pt,->] (user1.east) -- (R1.west) node [above,midway]
-    {Extend 1 $\pgfuseimage{clikey}_1$};
-    \draw<2>[line width=2pt,->] (R1.east) -- (R2.west) node [above,midway]
+    \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {Create $\pgfuseimage{clikey}_1$};
+
+    \draw<2>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<2>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_1$};
+
+    \draw<3>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {Extend 5 $\pgfuseimage{clikey}_1$};
+
+    \draw<4>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {Extend $\pgfuseimage{clikey}_1$};
+
+
+    \draw<5>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<5>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    {Extended, $\pgfuseimage{srvkey}_1$};
+
+    \draw<6>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<6>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {Extended, $\pgfuseimage{srvkey}_5$, $\snipdoc_{R_5}$};
+
+    \draw<7>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
+    \draw<7>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {Extend 3 $\pgfuseimage{clikey}_1$};
+
+    \draw<8>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
+    \draw<8>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    {Extend 3 $\pgfuseimage{clikey}_1$};
+
+    \draw<9>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
+    \draw<9>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<9>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
+    {Extend $\pgfuseimage{clikey}_1$};
+
+    \draw<10>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
+    \draw<10>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<10>[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<10>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
+    {Extended};
+
+    \draw<11>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
+    \draw<11>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<11>[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<11>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    {Extended SNIP3};
+
+    \draw<12>[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node {};
+    \draw<12>[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<12>[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<12>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {Extended SNIP3};
 
 \end{tikzpicture}
 \end{frame}
