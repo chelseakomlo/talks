@@ -326,6 +326,37 @@ $\Diamond$=performance property;
 \end{table}
 \end{frame}
 
+\begin{frame}
+\frametitle{Complex Path Requirements: Multiple Index Ranges}
+\begin{tikzpicture}
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+
+  \begin{pgfonlayer}{background}
+    \node[circle,draw,minimum size=1.5cm] (R1) at (8, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (12, -1.5) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
+  \end{pgfonlayer}
+    \draw[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {Guard, 5 $\pgfuseimage{clikey}_1$};
+    \draw<2>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    {$\pgfuseimage{clikey}_1$};
+    \draw<3->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<3>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_1$};
+    \draw<4>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_5$, $\snipdoc_{R_5}$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Complex Path Requirements: Delegated Verfiable Selection}
+\end{frame}
+
 
 \begin{frame}
   \centering
