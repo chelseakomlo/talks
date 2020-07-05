@@ -24,6 +24,7 @@
 \pgfdeclareimage[height=1.5ex]{srvkey}{key-green}
 \pgfdeclareimage[height=1.5ex]{clivrfkey}{key-blue}
 \pgfdeclareimage[height=1.5ex]{srvvrfkey}{key-red}
+\pgfdeclareimage[height=1cm]{server}{server}
 
 \titlegraphic{
 \raisebox{1ex}{
@@ -355,6 +356,33 @@ $\Diamond$=performance property;
 
 \begin{frame}
 \frametitle{Complex Path Requirements: Delegated Verfiable Selection}
+\begin{tikzpicture}
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+
+  \begin{pgfonlayer}{background}
+    \node (s2) at (16,1.65) {\pgfuseimage{server}};
+    \node[circle,draw,minimum size=1.5cm] (R1) at (8, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (12, -1.5) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
+  \end{pgfonlayer}
+    \draw[draw=green, line width=4pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw[draw=green, line width=4pt,-] (R1.east) -- (R5.west) node {};
+    \draw[draw=green, line width=4pt,-] (R5.east) -- (R3.west) node {};
+
+    \draw[draw=blue, line width=2pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw[draw=blue, line width=2pt,-] (R1.east) -- (R5.west) node {};
+    \draw[draw=blue, line width=2pt,-] (R5.east) -- (R3.west) node {};
+    \draw [line width=2pt,-] (R3.east) to (16, 1.3);
+    \node<2> [inner sep=1pt,font=\Huge,text=red] (block) at (15.5, .6) {$\mathbf{\times}$};
+    \draw<2> [line width=2pt,draw=red,dashed,->] ($(R3)+(-.2,.2)$) to[out=110,in=0] ($(R2)+(.4,-.1)$);
+    \draw<2>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    {$\pgfuseimage{clikey}_1$};
+\end{tikzpicture}
 \end{frame}
 
 
