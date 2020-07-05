@@ -143,60 +143,79 @@ Quadratic cost to client relative to number of relays.
 
 \begin{frame}
 \frametitle{New Data Structures: SNIPs and ENDIVEs}
+  \begin{itemize}
+    \item We need data structures such that each individual record can be
+      individually verified
+    \item We also need each record to be selectable via a single integer, so
+      clients can make a selection without requiring the entire consensus
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SNIP: Seperable Network Index Proof}
 \centerline{%
 \begin{tikzpicture}
 \node at (-7,-3.5) {~};
 \node at (7,3.5) {~};
 \node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-5,2) {Current\\Consensus};
 \node [anchor=north,inner sep=0pt] (cons) at ($(constitle.south) + (0,-.2)$) {\longconsensus};
-\node<2-> [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
-\node<2-> [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
-\node<2-> [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
-\node<2-> [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
-\node<2-> [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
-\node<2-> [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
-\draw<2-> [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
+\node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
+\node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
+\node [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
+\node [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
+\node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
+\node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
+\draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
+\node<2> [anchor=north west,inner sep=0pt] (snip) at (-1,3) {\scalebox{10}{\snipdocunsigned}};
+\node<2> [anchor=north,inner sep=0pt] (snipdesc) at ($(snip.north)+(0,-.2)$) {\scalebox{8}{\shortdoc}};
+\node<2> [anchor=south west,font=\large] at ($(snip.south west)!(snipdesc.south west)!(snip.south east)$) {[5284,5716)};
+\node<2> [shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=4mm,anchor=south east] at ($(snip.south east)+(-.3,.3)$) {} ;
+\node<3-> [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(2.5,3)!(constitle.south east)$) {SNIPs};
+\node<3-> [anchor=north,inner sep=0pt] (snip1) at ($(sniptitle.north)!(d1.north)!(sniptitle.south)$) {\snipdoc};
+\node<3-> [anchor=north,inner sep=0pt] (snip2) at ($(sniptitle.north)!(d2.north)!(sniptitle.south)$) {\snipdoc};
+\node<3-> [anchor=north,inner sep=0pt] (snip3) at ($(sniptitle.north)!(d3.north)!(sniptitle.south)$) {\snipdoc};
+\node<3-> [anchor=north,inner sep=0pt] at ($(snip3.south)+(0,.1)$) {$\mathbf{\vdots}$};
+\node<3-> [anchor=north,inner sep=0pt] (snip4) at ($(sniptitle.north)!(d4.north)!(sniptitle.south)$) {\snipdoc};
+\draw<3-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d1.east)!.3cm!(snip1.west)$) -- ($(d1.east)!.95!(snip1.west)$);
+\draw<4-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d2.east)!.3cm!(snip2.west)$) -- ($(d2.east)!.95!(snip2.west)$);
+\draw<4-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d3.east)!.3cm!(snip3.west)$) -- ($(d3.east)!.95!(snip3.west)$);
+\draw<4-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d4.east)!.3cm!(snip4.west)$) -- ($(d4.east)!.95!(snip4.west)$);
 \end{tikzpicture}
 }
 \end{frame}
 
 \begin{frame}
-\frametitle{SNIPs and ENDIVEs}
+\frametitle{ENDIVE: Efficient Network Directory with Independently Verifiable
+  Entries }
 \centerline{%
 \begin{tikzpicture}
 \node at (-7,-3.5) {~};
 \node at (7,3.5) {~};
 \node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-5,2) {Current\\Consensus};
 \node [anchor=north,inner sep=0pt] (cons) at ($(constitle.south) + (0,-.2)$) {\longconsensus};
-\node<2-> [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
-\node<2-> [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
-\node<2-> [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
-\node<2-> [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
-\node<2-> [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
-\node<2-> [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
-\draw<2-> [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
-\node<3> [fill=yellow,draw=red,ultra thick,font=\Large, text width=.2\textwidth,anchor=center,rectangle] at (0,0) {Separable\\Network\\Index\\Proof};
-\node<4> [anchor=north west,inner sep=0pt] (snip) at (-1,3) {\scalebox{10}{\snipdocunsigned}};
-\node<4> [anchor=north,inner sep=0pt] (snipdesc) at ($(snip.north)+(0,-.2)$) {\scalebox{8}{\shortdoc}};
-\node<4> [anchor=south west,font=\large] at ($(snip.south west)!(snipdesc.south west)!(snip.south east)$) {[5284,5716)};
-\node<4> [shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=4mm,anchor=south east] at ($(snip.south east)+(-.3,.3)$) {} ;
-\node<5-> [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(2.5,3)!(constitle.south east)$) {SNIPs};
-\node<5-> [anchor=north,inner sep=0pt] (snip1) at ($(sniptitle.north)!(d1.north)!(sniptitle.south)$) {\snipdoc};
-\node<5-> [anchor=north,inner sep=0pt] (snip2) at ($(sniptitle.north)!(d2.north)!(sniptitle.south)$) {\snipdoc};
-\node<5-> [anchor=north,inner sep=0pt] (snip3) at ($(sniptitle.north)!(d3.north)!(sniptitle.south)$) {\snipdoc};
-\node<5-> [anchor=north,inner sep=0pt] at ($(snip3.south)+(0,.1)$) {$\mathbf{\vdots}$};
-\node<5-> [anchor=north,inner sep=0pt] (snip4) at ($(sniptitle.north)!(d4.north)!(sniptitle.south)$) {\snipdoc};
-\draw<5-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d1.east)!.3cm!(snip1.west)$) -- ($(d1.east)!.95!(snip1.west)$);
-\draw<5-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d2.east)!.3cm!(snip2.west)$) -- ($(d2.east)!.95!(snip2.west)$);
-\draw<5-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d3.east)!.3cm!(snip3.west)$) -- ($(d3.east)!.95!(snip3.west)$);
-\draw<5-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d4.east)!.3cm!(snip4.west)$) -- ($(d4.east)!.95!(snip4.west)$);
-\node<6> [fill=yellow,draw=red,ultra thick,font=\Large, text width=.3\textwidth,anchor=center,rectangle] at (0,0) {Efficient\\Network\\Directory with\\Individually\\Verifiable\\Entries};
-\node<7-> [font=\large,anchor=south] (endivetitle) at ($(constitle.south west)!(5,3)!(constitle.south east)$) {ENDIVE};
-\node<7-> [anchor=north,inner sep=0pt] (endive) at ($(endivetitle.north)!(snip1.north)!(endivetitle.south)$) {\docendive};
-\draw<7-> [line width=2pt,double,thick,double equal sign distance,-implies] ($($(snip1.north east)!(endive.west)!(snip1.south east)$)!.1!(endive.west)$) -- ($($(snip1.north east)!(endive.west)!(snip1.south east)$)!.9!(endive.west)$);
-\node<8-> [font=\large,text centered,text width=.2\textwidth,anchor=south] (newconstitle) at ($(constitle.south west)!(0,3)!(constitle.south east)$) {New\\Consensus};
-\node<8-> [anchor=north,inner sep=0pt] (newnetdoc) at ($(netdoc.north west)!(newconstitle.south)!(netdoc.north east)$) {\netdoc};
-\draw<8-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(netdoc.east)!.3cm!(newnetdoc.west)$) -- ($(netdoc.east)!.9!(newnetdoc.west)$);
+\node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
+\node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
+\node [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
+\node [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
+\node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
+\node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
+\draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
+\node [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(2.5,3)!(constitle.south east)$) {SNIPs};
+\node [anchor=north,inner sep=0pt] (snip1) at ($(sniptitle.north)!(d1.north)!(sniptitle.south)$) {\snipdoc};
+\node [anchor=north,inner sep=0pt] (snip2) at ($(sniptitle.north)!(d2.north)!(sniptitle.south)$) {\snipdoc};
+\node [anchor=north,inner sep=0pt] (snip3) at ($(sniptitle.north)!(d3.north)!(sniptitle.south)$) {\snipdoc};
+\node [anchor=north,inner sep=0pt] at ($(snip3.south)+(0,.1)$) {$\mathbf{\vdots}$};
+\node [anchor=north,inner sep=0pt] (snip4) at ($(sniptitle.north)!(d4.north)!(sniptitle.south)$) {\snipdoc};
+\draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d1.east)!.3cm!(snip1.west)$) -- ($(d1.east)!.95!(snip1.west)$);
+\draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d2.east)!.3cm!(snip2.west)$) -- ($(d2.east)!.95!(snip2.west)$);
+\draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d3.east)!.3cm!(snip3.west)$) -- ($(d3.east)!.95!(snip3.west)$);
+\draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d4.east)!.3cm!(snip4.west)$) -- ($(d4.east)!.95!(snip4.west)$);
+\node<1-> [font=\large,anchor=south] (endivetitle) at ($(constitle.south west)!(5,3)!(constitle.south east)$) {ENDIVE};
+\node<1-> [anchor=north,inner sep=0pt] (endive) at ($(endivetitle.north)!(snip1.north)!(endivetitle.south)$) {\docendive};
+\draw<1-> [line width=2pt,double,thick,double equal sign distance,-implies] ($($(snip1.north east)!(endive.west)!(snip1.south east)$)!.1!(endive.west)$) -- ($($(snip1.north east)!(endive.west)!(snip1.south east)$)!.9!(endive.west)$);
+\node<2-> [font=\large,text centered,text width=.2\textwidth,anchor=south] (newconstitle) at ($(constitle.south west)!(0,3)!(constitle.south east)$) {New\\Consensus};
+\node<2-> [anchor=north,inner sep=0pt] (newnetdoc) at ($(netdoc.north west)!(newconstitle.south)!(netdoc.north east)$) {\netdoc};
+\draw<2-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(netdoc.east)!.3cm!(newnetdoc.west)$) -- ($(netdoc.east)!.9!(newnetdoc.west)$);
 \end{tikzpicture}
 }
 \end{frame}
