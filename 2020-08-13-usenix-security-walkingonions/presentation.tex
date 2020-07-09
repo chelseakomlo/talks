@@ -73,27 +73,26 @@
 
 
 \begin{frame}
-\frametitle{Motivation}
+\frametitle{Motivation: Enable Scalability of Anonymity Networks like Tor}
   \begin{itemize}
-    \item Design protocols that enable anonymity networks like Tor to scale
-      significantly beyond their current sizes.
-        \begin{itemize}
-          \item Add relays to network to increase capacity
-          \item While not increasing the overhead to clients to participate.
-        \end{itemize}
-    \item Do all of this in a way that does not change their existing security model
+    \item Ensure that adding new clients and relays
+      does not result in prohibitive bandwidth/cpu overhead.
+    \item[]~
+    \item Maintain the existing security model of Tor.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Our Contributions}
+\frametitle{Our Contributions: Walking Onions}
   \begin{itemize}
-    \item Walking Onions, a set of protocols that allows anonymity networks
-      like Tor to scale with constant-size overhead to users.
-    \item Walking Onions maintains the existing security model for Tor in one
-      variant, with a slight loss of forward secrecy in the other variant.
-    \item Demonstrates performance improvements at networks the size of Tor
-      today.
+    \item \textbf{Improved Scalability.} Adding new relays to the network while
+      clients maintain constant-size bandwidth/cpu overhead.
+    \item[]~
+    \item \textbf{Same Thread Model.} Maintains the existing security model for Tor in one
+      variant, with a slight loss of forward secrecy in the other.
+    \item[]~
+    \item \textbf{Performance Improvements Today.} Demonstrates improvements at
+      networks the size of Tor today.
   \end{itemize}
 \end{frame}
 
