@@ -59,7 +59,7 @@
 
 
 \title[Walking Onions]{Walking Onions: Scaling Anonymity Networks while Protecting Users}
-\author{\textbf{Chelsea H. Komlo}, Nick Mathewson, Ian Goldberg}
+\author{\textbf{Chelsea Komlo}, Nick Mathewson, Ian Goldberg}
 \institute{\small{Presented at USENIX Security}}
 \date{13 August, 2020}
 
@@ -85,31 +85,14 @@
 \begin{frame}
 \frametitle{Our Contributions: Walking Onions}
   \begin{itemize}
-    \item \textbf{Improved Scalability.} Adding new relays to the network while
-      clients maintain constant-size bandwidth/cpu overhead.
+    \item \textbf{Improved Scalability.} Constant-size bandwidth overhead for
+      clients even as new relays are added to the network.
     \item[]~
-    \item \textbf{Same Thread Model.} Maintains the existing security model for Tor in one
-      variant, with a slight loss of forward secrecy in the other.
+    \item \textbf{Same Threat Model.} Maintains Tor's existing security model
+      in one variant, with a slight loss of forward secrecy in the other.
     \item[]~
-    \item \textbf{Performance Improvements Today.} Demonstrates improvements at
-      networks the size of Tor today.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Outline}
-  \begin{itemize}
-    \item Overview of current Tor and performance bottlenecks
-    \item Overview of Walking Onions
-      \begin{itemize}
-        \item Two variants
-        \item Comparison to current Tor
-      \end{itemize}
-    \item Performance evaluation against current Tor
-      \begin{itemize}
-        \item Bandwidth
-        \item CPU
-      \end{itemize}
+    \item \textbf{Immediate Performance Improvements.} Demonstrates
+      improvements at networks the size of Tor today.
   \end{itemize}
 \end{frame}
 
@@ -117,6 +100,76 @@
   \centering
   \huge
   Current Tor
+\end{frame}
+
+\begin{frame}
+\frametitle{Current Tor Path Selection and Circuit Extension}
+\footnotesize
+\begin{tikzpicture}
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+
+  \begin{pgfonlayer}{background}
+    \node [anchor=north,inner sep=0pt] (cons) at (-1, 1)  {\longconsensus};
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1,0)$) {\netdocunsigned};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
+    \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
+    \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
+    \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.8!(cons.east)$);
+  \end{pgfonlayer}
+
+  \begin{pgfonlayer}{background}
+    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1.5) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
+  \end{pgfonlayer}
+
+    \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {\textbf{Create} $\pgfuseimage{clikey}_1$};
+
+    \draw<2->[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<2>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_1$};
+
+    \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {\textbf{Extend} $R_5$ $\pgfuseimage{clikey}_1$};
+
+    \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    {$\pgfuseimage{clikey}_1$};
+
+
+    \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_1$};
+
+    \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_5$ };
+
+    \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_1$};
+
+    \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_1$};
+
+    \draw<9>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
+    {$\pgfuseimage{clikey}_1$};
+
+    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<10>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_3$};
+
+    \draw<11>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_3$};
+
+    \draw<12>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_3$};
+
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
