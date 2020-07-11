@@ -106,10 +106,13 @@
 \frametitle{Current Tor Path Selection and Circuit Extension}
 \footnotesize
 \begin{tikzpicture}
-  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (0,-1) {};
 
-  \begin{pgfonlayer}{background}
-    \node [anchor=north,inner sep=0pt] (cons) at (-1, 1)  {\longconsensus};
+  \begin{pgfonlayer}{backbackground}
+    \node [font=\small,text centered,text width=.2\textwidth] (constitle) at
+    (-2.3,2) {Current\\Consensus};
+    \node [anchor=north,inner sep=0pt] (cons) at (-3, 1.2)  {\scalebox{.8} {
+      \longconsensus} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1,0)$) {\netdocunsigned};
     \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
     \node [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
@@ -120,12 +123,18 @@
   \end{pgfonlayer}
 
   \begin{pgfonlayer}{background}
-    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
-    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
-    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
-    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1.5) {$R_5$};
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
+    \node[circle,draw,minimum size=1.5cm] (R1) at
+    ($(user1.north east)+(3.5,-1)$) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at
+    ($(user1.north east)+(4,1)$) {$R_2$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at
+    ($(user1.north east)+(5,-3)$) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at
+    ($(user1.north east)+(7,0)$)  {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at
+    ($(user1.north east)+(8,2)$)  {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at
+    ($(user1.north east)+(10,-2)$)  {$R_6$};
   \end{pgfonlayer}
 
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
@@ -156,11 +165,11 @@
     \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_1$};
 
-    \draw<9>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
+    \draw<9>[line width=1pt,->] (R5.east) -- (R6.west) node [below, midway]
     {$\pgfuseimage{clikey}_1$};
 
-    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
-    \draw<10>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
+    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R6.west) node {};
+    \draw<10>[line width=1pt,->] (R6.west) -- (R5.east) node [below, midway]
     {$\pgfuseimage{srvkey}_3$};
 
     \draw<11>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
