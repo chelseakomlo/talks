@@ -88,8 +88,8 @@
     \item \textbf{Improved Scalability.} Constant-size bandwidth overhead for
       clients even as new relays are added to the network.
     \item[]~
-    \item \textbf{Same Threat Model.} Maintains Tor's existing security model
-      in one variant, with a slight loss of forward secrecy in the other.
+    \item \textbf{Maintains Tor's Existing Security Model.} One variant has no change,
+      the other a slight loss of forward secrecy.
     \item[]~
     \item \textbf{Immediate Performance Improvements.} Demonstrates
       improvements at networks the size of Tor today.
@@ -100,6 +100,19 @@
   \centering
   \huge
   Current Tor
+\end{frame}
+
+\begin{frame}
+\frametitle{Security Model}
+
+  \begin{itemize}
+    \item \textbf{Epistemic Attacks}: Users with different views of the
+      network can be distinguished by their relay selection.
+    \item[]~
+    \item \textbf{Route-Capture Attacks}: When an adversary can influence
+      users' relay selection.
+  \end{itemize}
+
 \end{frame}
 
 \begin{frame}
@@ -182,22 +195,13 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Current Tor Security Model}
-
-Current Tor optimizes for security over scalability
-
+\frametitle{Tor Security Model: Security over Scalability}
   \begin{itemize}
-    \item \textbf{Epistemic Attacks}
-    \item \textbf{Route-Capture Attacks}
+    \item Consensus size grows quadratically relative to the number of relays!
+    \item[]~
+    \item Goal: Same protections against eptistemic and path-routing attacks
+      with less overhead to clients.
   \end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Current Tor Scalability}
-
-Quadratic cost to client relative to number of relays.
-
 \end{frame}
 
 \begin{frame}
@@ -208,11 +212,13 @@ Quadratic cost to client relative to number of relays.
 
 \begin{frame}
 \frametitle{New Data Structures: SNIPs and ENDIVEs}
+
+  Goal: Relay entries that are:
   \begin{itemize}
-    \item We need data structures such that each individual record can be
-      individually verified
-    \item We also need each record to be selectable via a single integer, so
-      clients can make a selection without requiring the entire consensus
+    \item[]~
+    \item Individually verifiable without requiring the entire consensus.
+    \item[]~
+    \item Identifiable by a single index.
   \end{itemize}
 \end{frame}
 
@@ -347,10 +353,6 @@ Quadratic cost to client relative to number of relays.
 \begin{frame}
 \frametitle{Telescoping Walking Onions}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{Why do these maintain Tor's existing security level?}
 \end{frame}
 
 \begin{frame}
