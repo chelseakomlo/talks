@@ -9,6 +9,7 @@
 \usepackage{amsfonts, txfonts}
 \usepackage{wasysym}
 \usepackage{xcolor}
+\usepackage{caption}
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
@@ -463,21 +464,21 @@ $\Diamond$=performance property;
 \begin{frame}
 \frametitle{Bandwidth Results- Relays}
 \begin{center}
-  \hspace{-1.3cm}
+  \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
     \vspace*{8em}
     \begin{tikzpicture}
-    \scalebox{0.17} {
-      \includegraphics{relay-plot.png}
-    }
+        \scalebox{0.62} {
+          \includegraphics{relay_ss.pdf}
+        }
     \end{tikzpicture}
   \end{minipage}
-  \hspace{0.8cm}
+  \hspace{0.6cm}
   \begin{minipage}[t] {0.45\linewidth}
     \vspace*{8em}
     \begin{tikzpicture}
-    \scalebox{0.17} {
-      \includegraphics{relay-plot-89.png}
+    \scalebox{0.62} {
+      \includegraphics{relay_ss_wide.pdf}
     }
     \end{tikzpicture}
   \end{minipage}
@@ -487,21 +488,21 @@ $\Diamond$=performance property;
 \begin{frame}
 \frametitle{Bandwidth Results- Clients}
 \begin{center}
-  \hspace{-1.3cm}
+  \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
     \vspace*{8em}
     \begin{tikzpicture}
-    \scalebox{0.17} {
-      \includegraphics{client-plot.png}
+    \scalebox{0.62} {
+      \includegraphics{client_ss.pdf}
     }
     \end{tikzpicture}
   \end{minipage}
-  \hspace{0.8cm}
+  \hspace{0.5cm}
   \begin{minipage}[t] {0.45\linewidth}
     \vspace*{8em}
     \begin{tikzpicture}
-    \scalebox{0.17} {
-      \includegraphics{client-plot-89.png}
+    \scalebox{0.62} {
+      \includegraphics{client_ss_wide.pdf}
     }
     \end{tikzpicture}
   \end{minipage}
