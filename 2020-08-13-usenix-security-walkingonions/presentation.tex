@@ -509,11 +509,18 @@ $\Diamond$=performance property;
 \end{frame}
 
 \begin{frame}
-\frametitle{CPU}
-\end{frame}
-
-\begin{frame}
-\frametitle{Summary}
+\frametitle{Takeaways}
+  \begin{itemize}
+    \item The design of Tor today imposes impractical overheads to clients as
+      the network scales.
+    \item[]~
+    \item Walking Onions removes the per-relay bandwidth and storage cost to
+      clients.
+    \item[]~
+    \item Walking Onions offers the same security protections against epistemic
+      and route capture attacks as prior designs that required a globally
+      consistent view.
+  \end{itemize}
 \end{frame}
 \end{document}
 
@@ -523,3 +530,6 @@ $\Diamond$=performance property;
 TODO Simulation description
 \end{frame}
 
+\begin{frame}
+\frametitle{CPU}
+\end{frame}
