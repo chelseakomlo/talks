@@ -76,12 +76,12 @@
 
 
 \begin{frame}
-\frametitle{Motivation: Enable Scalability of Anonymity Networks like Tor}
+\frametitle{Motivation: Safely Enable Scalability of Anonymity Networks like Tor }
   \begin{itemize}
-    \item Ensure that adding new clients and relays
-      does not result in prohibitive bandwidth/cpu overhead.
+    \item \textbf{Enable Scalability.} Ensure that client and relay growth
+      does not cause prohibitive bandwidth/cpu overhead to clients.
     \item[]~
-    \item Maintain the existing security model of Tor.
+    \item \textbf{Safely.} Maintain the existing security model of Tor.
   \end{itemize}
 \end{frame}
 
@@ -200,10 +200,11 @@
 \begin{frame}
 \frametitle{Tor Security Model: Security over Scalability}
   \begin{itemize}
-    \item Consensus size grows quadratically relative to the number of relays!
+    \item \textbf{Globally Consistent View.} Consensus size grows quadratically
+      relative to the number of relays, which all clients must maintain!
     \item[]~
-    \item Goal: Same protections against eptistemic and path-routing attacks
-      with less overhead to clients.
+    \item \textbf{Goal:} Same protections against eptistemic and route-capture
+      attacks but less overhead to clients.
   \end{itemize}
 \end{frame}
 
@@ -355,45 +356,43 @@
 
 \begin{frame}
 \frametitle{Telescoping Walking Onions}
+\begin{tikzpicture}
+  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
 
-\end{frame}
+  \begin{pgfonlayer}{background}
 
-\begin{frame}
-\frametitle{}
+    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1.5) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
 
-\begin{table}[t]
-\renewcommand{\arraystretch}{1.2}
-\caption{Comparison: Telescoping, Single-Pass, Current Tor }
+  \end{pgfonlayer}
+    \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
+    {Create $\pgfuseimage{clikey}_1$};
 
-\centering
-\footnotesize
+    \draw<2>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    {$\pgfuseimage{clikey}_1$};
 
-\CIRCLE=achieved; \Circle=not achieved;
-  \LEFTcircle=partially achieved
+    \draw<3>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
+    {$\pgfuseimage{clikey}_1$};
 
-$\Diamond$=performance property;
-  $\dagger$=security property
+    \draw<4->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<4>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_3$};
 
-    \begin{tabular}{|c|c|c|c|c|}
-  \hline
-  & & Telescop. & Single-Pass & Current Tor \\
-  \hline
-  $\Diamond$ & Constant-size client download & \CIRCLE & \CIRCLE & \Circle \\
-  \hline
-  $\Diamond$ & One round trip per circuit built & \Circle & \CIRCLE & \Circle \\
-  % Start security properties
-  \hline
-  $\dagger$ & \raggedright Complete client control of relays selected & \LEFTcircle & \Circle & \CIRCLE \\
-  \hline
-  $\dagger$ & Forward-secret relay selection& \CIRCLE & \LEFTcircle & \CIRCLE \\
-  \hline
-  $\dagger$ & Forward secrecy for data & \CIRCLE & \CIRCLE & \CIRCLE \\
-  \hline
-  $\dagger$ & \raggedright Relays unaware of their positions in paths & \LEFTcircle & \Circle & \LEFTcircle \\
-  \hline
-\end{tabular}
+    \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
+    \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_5, \pgfuseimage{srvkey}_3, \snipdoc_{R_3}$};
 
-\end{table}
+    \draw<6->[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
+    [below, midway] {};
+    \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_5, \pgfuseimage{srvkey}_3, \pgfuseimage{srvkey}_1,
+    \snipdoc_{R_3}, \snipdoc_{R_5}$};
+
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
@@ -524,6 +523,44 @@ $\Diamond$=performance property;
   \end{itemize}
 \end{frame}
 \end{document}
+
+\begin{frame}
+\frametitle{}
+
+\begin{table}[t]
+\renewcommand{\arraystretch}{1.2}
+\caption{Bonus Slide: Comparison of Telescoping, Single-Pass, Current Tor }
+
+\centering
+\footnotesize
+
+\CIRCLE=achieved; \Circle=not achieved;
+  \LEFTcircle=partially achieved
+
+$\Diamond$=performance property;
+  $\dagger$=security property
+
+    \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  & & Telescop. & Single-Pass & Current Tor \\
+  \hline
+  $\Diamond$ & Constant-size client download & \CIRCLE & \CIRCLE & \Circle \\
+  \hline
+  $\Diamond$ & One round trip per circuit built & \Circle & \CIRCLE & \Circle \\
+  % Start security properties
+  \hline
+  $\dagger$ & \raggedright Complete client control of relays selected & \LEFTcircle & \Circle & \CIRCLE \\
+  \hline
+  $\dagger$ & Forward-secret relay selection& \CIRCLE & \LEFTcircle & \CIRCLE \\
+  \hline
+  $\dagger$ & Forward secrecy for data & \CIRCLE & \CIRCLE & \CIRCLE \\
+  \hline
+  $\dagger$ & \raggedright Relays unaware of their positions in paths & \LEFTcircle & \Circle & \LEFTcircle \\
+  \hline
+\end{tabular}
+
+\end{table}
+\end{frame}
 
 % Bonus slides
 \begin{frame}
