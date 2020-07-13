@@ -63,8 +63,8 @@
 
 \title[Walking Onions]{Walking Onions: Scaling Anonymity Networks while Protecting Users}
 \author{\textbf{Chelsea Komlo}, Nick Mathewson, Ian Goldberg}
-\institute{\small{Presented at USENIX Security}}
-\date{13 August, 2020}
+%\institute{\small{Presented at USENIX Security}}
+\date{Presented at USENIX Security \\ 13 August, 2020}
 
 \begin{document}
 \setbeamertemplate{itemize items}[triangle]
@@ -76,12 +76,12 @@
 
 
 \begin{frame}
-\frametitle{Motivation: Safely Enable Scalability of Anonymity Networks like Tor }
+\frametitle{Motivation}
   \begin{itemize}
     \item \textbf{Enable Scalability.} Ensure that client and relay growth
       does not cause prohibitive bandwidth/cpu overhead to clients.
     \item[]~
-    \item \textbf{Safely.} Maintain the existing security model of Tor.
+    \item \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
   \end{itemize}
 \end{frame}
 
@@ -162,27 +162,27 @@
     {$\pgfuseimage{srvkey}_1$};
 
     \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
-    {\textbf{Extend} $R_5$ $\pgfuseimage{clikey}_1$};
+    {\textbf{Extend} $R_5$ $\pgfuseimage{clikey}_5$};
 
     \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {$\pgfuseimage{clikey}_1$};
+    {$\pgfuseimage{clikey}_5$};
 
 
     \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_1$};
+    {$\pgfuseimage{srvkey}_5$};
 
     \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_5$ };
 
     \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
-    {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_1$};
+    {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_3$};
 
     \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_1$};
+    {\textbf{Extend} $R_3$ $\pgfuseimage{clikey}_3$};
 
     \draw<9>[line width=1pt,->] (R5.east) -- (R6.west) node [below, midway]
-    {$\pgfuseimage{clikey}_1$};
+    {$\pgfuseimage{clikey}_3$};
 
     \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R6.west) node {};
     \draw<10>[line width=1pt,->] (R6.west) -- (R5.east) node [below, midway]
@@ -203,7 +203,7 @@
     \item \textbf{Globally Consistent View.} Consensus size grows quadratically
       relative to the number of relays, which all clients must maintain!
     \item[]~
-    \item \textbf{Goal:} Same protections against eptistemic and route-capture
+    \item \textbf{Goal:} Same protections against eptistemic and route capture
       attacks but less overhead to clients.
   \end{itemize}
 \end{frame}
@@ -215,19 +215,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{New Data Structures: SNIPs and ENDIVEs}
-
-  Goal: Relay entries that are:
-  \begin{itemize}
-    \item[]~
-    \item Individually verifiable without requiring the entire consensus.
-    \item[]~
-    \item Identifiable by a single index.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{SNIP: Seperable Network Index Proof}
+  \frametitle{New Data Structure: Seperable Network Index Proof (SNIP)}
 \centerline{%
 \begin{tikzpicture}
 \node at (-7,-3.5) {~};
@@ -319,27 +307,27 @@
     {$\pgfuseimage{srvkey}_1$};
 
     \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
-    {5 $\pgfuseimage{clikey}_1$};
+    {5 $\pgfuseimage{clikey}_5$};
 
     \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {$\pgfuseimage{clikey}_1$};
+    {$\pgfuseimage{clikey}_5$};
 
 
     \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_1$};
+    {$\pgfuseimage{srvkey}_5$};
 
     \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_5$, $\snipdoc_{R_5}$};
 
     \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
-    {3 $\pgfuseimage{clikey}_1$};
+    {3 $\pgfuseimage{clikey}_3$};
 
     \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {3 $\pgfuseimage{clikey}_1$};
+    {3 $\pgfuseimage{clikey}_3$};
 
     \draw<9>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
-    {$\pgfuseimage{clikey}_1$};
+    {$\pgfuseimage{clikey}_3$};
 
     \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
     \draw<10>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
@@ -475,7 +463,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Bandwidth Results- Relays}
+\frametitle{Bandwidth Results: Relays}
 \begin{center}
   \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
@@ -499,7 +487,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Bandwidth Results- Clients}
+\frametitle{Bandwidth Results: Clients}
 \begin{center}
   \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
