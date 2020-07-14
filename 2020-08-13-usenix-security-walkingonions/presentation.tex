@@ -79,23 +79,23 @@
 \begin{frame}
 \frametitle{Motivation}
   \begin{itemize}
-    \item \textbf{Enable Scalability.} Ensure that client and relay growth
+    \item<1-> \textbf{Enable Scalability.} Ensure that client and relay growth
       does not cause prohibitive bandwidth/cpu overhead to clients.
-    \item[]~
-    \item \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
+    \item<1>[]~
+    \item<2> \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Our Contributions: Walking Onions}
   \begin{itemize}
-    \item \textbf{Improved Scalability.} Constant-size bandwidth overhead for
+    \item<1-> \textbf{Improved Scalability.} Constant-size bandwidth overhead for
       clients even as new relays are added to the network.
-    \item[]~
-    \item \textbf{Maintains Tor's Existing Security Model.} One variant has no change,
+    \item<1->[]~
+    \item<2-> \textbf{Maintains Tor's Existing Security Model.} One variant has no change,
       the other a slight loss of forward secrecy.
-    \item[]~
-    \item \textbf{Immediate Performance Improvements.} Demonstrates
+    \item<2->[]~
+    \item<3-> \textbf{Immediate Performance Improvements.} Demonstrates
       improvements at networks the size of Tor today.
   \end{itemize}
 \end{frame}
@@ -110,10 +110,10 @@
 \frametitle{Security Model}
 
   \begin{itemize}
-    \item \textbf{Epistemic Attacks}: Users with different views of the
+    \item<1-> \textbf{Epistemic Attacks}: Users with different views of the
       network can be distinguished by their relay selection.
-    \item[]~
-    \item \textbf{Route-Capture Attacks}: When an adversary can influence
+    \item<1->[]~
+    \item<2-> \textbf{Route-Capture Attacks}: When an adversary can influence
       users' relay selection.
   \end{itemize}
 
@@ -201,10 +201,10 @@
 \begin{frame}
 \frametitle{Tor Security Model: Security over Scalability}
   \begin{itemize}
-    \item \textbf{Globally Consistent View.} Consensus size grows quadratically
+    \item<1-> \textbf{Globally Consistent View.} Consensus size grows quadratically
       relative to the number of relays, which all clients must maintain!
-    \item[]~
-    \item \textbf{Goal:} Same protections against eptistemic and route capture
+    \item<1->[]~
+    \item<2-> \textbf{Goal:} Same protections against eptistemic and route capture
       attacks but less overhead to clients.
   \end{itemize}
 \end{frame}
@@ -456,13 +456,13 @@
 \begin{frame}
 \frametitle{Takeaways}
   \begin{itemize}
-    \item The design of Tor today imposes impractical overheads to clients as
+    \item<1-> The design of Tor today imposes impractical overheads to clients as
       the network scales.
-    \item[]~
-    \item Walking Onions removes the per-relay bandwidth and storage cost to
+    \item<1->[]~
+    \item<2-> Walking Onions removes the per-relay bandwidth and storage cost to
       clients.
-    \item[]~
-    \item Walking Onions offers the same security protections against epistemic
+    \item<2->[]~
+    \item<3-> Walking Onions offers the same security protections against epistemic
       and route capture attacks as prior designs that required a globally
       consistent view.
   \end{itemize}
