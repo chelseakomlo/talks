@@ -297,33 +297,107 @@
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
 
-  \begin{pgfonlayer}{backbackground}
-    \node [anchor=north,inner sep=0pt] (cons) at (8, -1.2)  {\scalebox{.5} {
-      \longconsensus} };
-    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1,0)$)
-    {\scalebox{0.5}{\netdocunsigned }};
-    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$)
-    {\scalebox{0.5}{\shortdoc}};
-    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
-    {\scalebox{0.5}{\shortdoc}};
-    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
-    {\scalebox{0.5}{\shortdoc}};
-    \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south
-    west)!(d2.south)!(cons.south east)$) {\scalebox{0.5}{\shortdoc}};
-    \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
-    \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.8!(cons.east)$);
-  \end{pgfonlayer}
 
   \begin{pgfonlayer}{background}
 
     \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
-    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
-    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
-    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1.5) {$R_5$};
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
 
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 2) {$R_2$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R2.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R4.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1) {$R_5$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R5.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 3) {$R_6$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R6.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
   \end{pgfonlayer}
+
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {$\pgfuseimage{clikey}_1$};
 
@@ -373,13 +447,104 @@
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
 
-  \begin{pgfonlayer}{backbackground}
-    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -2) {$R_1$};
-    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
-    \node[circle,draw,minimum size=1.5cm] (R3) at (15.5, 1) {$R_3$};
-    \node[circle,draw,minimum size=1.5cm] (R4) at (8, 3) {$R_4$};
-    \node[circle,draw,minimum size=1.5cm] (R5) at (12, -1.5) {$R_5$};
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
+  \begin{pgfonlayer}{background}
+
+    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 2) {$R_2$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R2.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+
+    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R4.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1) {$R_5$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R5.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
+
+    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 3) {$R_6$};
+    \node [anchor=north,inner sep=0pt] (cons) at ($(R6.south east)+(-.15, 0)$)
+     {\scalebox{.7} { \docendive} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    {\scalebox{0.5}{\snipdoc}};
+    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    {\scalebox{0.5}{\snipdoc}};
 
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.north) node [below, midway]
     {$\pgfuseimage{clikey}_1, \pgfuseimage{clivrfkey}_1$};
