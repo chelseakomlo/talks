@@ -44,6 +44,9 @@
 \definecolor{auth}{RGB}{138,23,94}
 
 \newcommand\shortdoc{\begin{tikzpicture}[scale=.25] \draw[-,draw=black,fill=gray] (0,0) -- (2,0) -- (2,-2) -- (-1,-2) -- (-1,-1) -- cycle; \end{tikzpicture}}
+\newcommand\shortdocused{\begin{tikzpicture}[scale=.25]
+\draw[-,draw=black,fill=green] (0,0) -- (2,0) -- (2,-2) -- (-1,-2) -- (-1,-1) -- cycle; \end{tikzpicture}}
+
 \newcommand\medconsensus{\begin{tikzpicture}[scale=.25] \draw[-,draw=black,fill=gray] (0,0) -- (2,0) -- (2,-6) -- (-1,-6) -- (-1,-1) -- cycle; \node[shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=2mm,anchor=south east] at (1.8,-5.8) {} ; \end{tikzpicture}}
 \newcommand\longconsensus{\begin{tikzpicture}[scale=.25] \draw[-,draw=black,fill=gray] (0,0) -- (2,0) -- (2,-13) -- (-1,-13) -- (-1,-1) -- cycle; \node[shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=2mm,anchor=south east] at (1.8,-12.8) {} ; \end{tikzpicture}}
 \newcommand\netdocunsigned{\begin{tikzpicture}[scale=.25] \draw[-,draw=black,fill=ProcessBlue] (0,0) -- (2,0) -- (2,-2) -- (-1,-2) -- (-1,-1) -- cycle; \end{tikzpicture}}
@@ -130,7 +133,8 @@
     (-2.3,2) {Current\\Consensus};
     \node [anchor=north,inner sep=0pt] (cons) at (-3, 1.2)  {\scalebox{.8} {
       \longconsensus} };
-    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1,0)$) {\netdocunsigned};
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1,0)$)
+    {\netdocunsigned };
     \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
     \node [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
     \node [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
@@ -156,6 +160,8 @@
 
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {\textbf{Create} $\pgfuseimage{clikey}_1$};
+    \node<1->[anchor=south,inner sep=0pt] (d4) at ($(cons.south
+    west)!(d2.south)!(cons.south east)$) {\shortdocused};
 
     \draw<2->[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
     [below, midway] {};
@@ -164,6 +170,7 @@
 
     \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {\textbf{Extend} $R_5$ $\pgfuseimage{clikey}_5$};
+    \node<3->[anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdocused};
 
     \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {$\pgfuseimage{clikey}_5$};
@@ -178,6 +185,7 @@
 
     \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {\textbf{Extend} $R_6$ $\pgfuseimage{clikey}_6$};
+    \node<7->[anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdocused};
 
     \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {\textbf{Extend} $R_6$ $\pgfuseimage{clikey}_6$};
@@ -288,6 +296,23 @@
 \frametitle{Telescoping Walking Onions}
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+
+  \begin{pgfonlayer}{backbackground}
+    \node [anchor=north,inner sep=0pt] (cons) at (8, -1.2)  {\scalebox{.5} {
+      \longconsensus} };
+    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1,0)$)
+    {\scalebox{0.5}{\netdocunsigned }};
+    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$)
+    {\scalebox{0.5}{\shortdoc}};
+    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    {\scalebox{0.5}{\shortdoc}};
+    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    {\scalebox{0.5}{\shortdoc}};
+    \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south
+    west)!(d2.south)!(cons.south east)$) {\scalebox{0.5}{\shortdoc}};
+    \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
+    \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.8!(cons.east)$);
+  \end{pgfonlayer}
 
   \begin{pgfonlayer}{background}
 
