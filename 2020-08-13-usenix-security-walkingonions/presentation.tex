@@ -21,6 +21,14 @@
 \pgfplotsset{compat=1.15}
 \usetikzlibrary{arrows}
 
+% Method to add an item that will appear in every slide
+%\addtobeamertemplate{footline}{%
+%
+%  \tikz[remember picture, overlay] \fill[blue] (current page.south east)
+%    rectangle ++(1cm,2cm);
+%
+%}{}
+
 \pgfdeclareimage[height=5ex]{crysplogo}{crysplogo}
 \pgfdeclareimage[height=5ex]{cscslogo}{cscslogo}
 \pgfdeclareimage[height=5ex]{torlogo}{torlogo}
@@ -31,11 +39,11 @@
 \pgfdeclareimage[height=1cm]{server}{server}
 
 \titlegraphic{
-\raisebox{1ex}{
-\pgfuseimage{crysplogo}~~~
+%\raisebox{1ex}{
+%\pgfuseimage{crysplogo}~~~
 \pgfuseimage{cscslogo}~~~
 \pgfuseimage{torlogo}
-}
+%}
 }
 
 \definecolor{AlertRed}{rgb}{1.0,0.125,0.25}
@@ -154,11 +162,11 @@
     \node[circle,draw,minimum size=1.5cm] (R3) at
     ($(user1.north east)+(5,-3)$) {$R_3$};
     \node[circle,draw,minimum size=1.5cm] (R4) at
-    ($(user1.north east)+(7,0)$)  {$R_4$};
+    ($(user1.north east)+(7,-1.5)$)  {$R_4$};
     \node[circle,draw,minimum size=1.5cm] (R5) at
-    ($(user1.north east)+(8,2)$)  {$R_5$};
+    ($(user1.north east)+(8,1)$)  {$R_5$};
     \node[circle,draw,minimum size=1.5cm] (R6) at
-    ($(user1.north east)+(10,-2)$)  {$R_6$};
+    ($(user1.north east)+(9,-1)$)  {$R_6$};
   \end{pgfonlayer}
 
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
@@ -243,8 +251,8 @@
 \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
 \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
-\node<2> [anchor=north west,inner sep=0pt] (snip) at (-1,3) {\scalebox{10}{\snipdocunsigned}};
-\node<2> [anchor=north,inner sep=0pt] (snipdesc) at ($(snip.north)+(0,-.2)$) {\scalebox{8}{\shortdoc}};
+\node<2> [anchor=north west,inner sep=0pt] (snip) at (-1,4) {\scalebox{9}{\snipdocunsigned}};
+\node<2> [anchor=north,inner sep=0pt] (snipdesc) at ($(snip.north)+(0,-.5)$) {\scalebox{6}{\shortdoc}};
 \node<2> [anchor=south west,font=\large] at ($(snip.south west)!(snipdesc.south west)!(snip.south east)$) {[5284,5716)};
 \node<2> [shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=4mm,anchor=south east] at ($(snip.south east)+(-.3,.3)$) {} ;
 \node<3-> [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(2.5,3)!(constitle.south east)$) {SNIPs};
