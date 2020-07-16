@@ -242,7 +242,7 @@
 \begin{tikzpicture}
 \node at (-7,-3.5) {~};
 \node at (7,3.5) {~};
-\node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-5,2) {Current\\Consensus};
+\node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-6.5,2) {Current\\Consensus};
 \node [anchor=north,inner sep=0pt] (cons) at ($(constitle.south) + (0,-.2)$) {\longconsensus};
 \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
 \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
@@ -251,20 +251,21 @@
 \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
 \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
-\node<2> [anchor=north west,inner sep=0pt] (snip) at (-1,4) {\scalebox{9}{\snipdocunsigned}};
-\node<2> [anchor=north,inner sep=0pt] (snipdesc) at ($(snip.north)+(0,-.5)$) {\scalebox{6}{\shortdoc}};
-\node<2> [anchor=south west,font=\large] at ($(snip.south west)!(snipdesc.south west)!(snip.south east)$) {[5284,5716)};
+\node<2> [anchor=north west,inner sep=0pt] (snip) at (-1,3) {\scalebox{8}{\snipdocunsigned}};
+\node<2> [anchor=north,inner sep=0pt] (snipdesc) at ($(snip.north)+(0,-.5)$) {\scalebox{5}{\shortdoc}};
+\node<2> [anchor=south west] at ($(snip.south west)!(snipdesc.south west)!(snip.south east)$) {[5284,5716)};
 \node<2> [shape=star,star points=9,fill=auth,inner sep=0pt,star point ratio=.5,minimum size=4mm,anchor=south east] at ($(snip.south east)+(-.3,.3)$) {} ;
-\node<3-> [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(2.5,3)!(constitle.south east)$) {SNIPs};
+\node<3-> [font=\large,anchor=south] (sniptitle) at
+  ($(constitle.south west)!(.9,3)!(constitle.south east)$) {SNIPs};
 \node<3-> [anchor=north,inner sep=0pt] (snip1) at ($(sniptitle.north)!(d1.north)!(sniptitle.south)$) {\snipdoc};
 \node<3-> [anchor=north,inner sep=0pt] (snip2) at ($(sniptitle.north)!(d2.north)!(sniptitle.south)$) {\snipdoc};
 \node<3-> [anchor=north,inner sep=0pt] (snip3) at ($(sniptitle.north)!(d3.north)!(sniptitle.south)$) {\snipdoc};
 \node<3-> [anchor=north,inner sep=0pt] at ($(snip3.south)+(0,.1)$) {$\mathbf{\vdots}$};
 \node<3-> [anchor=north,inner sep=0pt] (snip4) at ($(sniptitle.north)!(d4.north)!(sniptitle.south)$) {\snipdoc};
 \draw<3-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d1.east)!.3cm!(snip1.west)$) -- ($(d1.east)!.95!(snip1.west)$);
-\draw<4-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d2.east)!.3cm!(snip2.west)$) -- ($(d2.east)!.95!(snip2.west)$);
-\draw<4-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d3.east)!.3cm!(snip3.west)$) -- ($(d3.east)!.95!(snip3.west)$);
-\draw<4-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d4.east)!.3cm!(snip4.west)$) -- ($(d4.east)!.95!(snip4.west)$);
+\draw<3-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d2.east)!.3cm!(snip2.west)$) -- ($(d2.east)!.95!(snip2.west)$);
+\draw<3-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d3.east)!.3cm!(snip3.west)$) -- ($(d3.east)!.95!(snip3.west)$);
+\draw<3-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(d4.east)!.3cm!(snip4.west)$) -- ($(d4.east)!.95!(snip4.west)$);
 \end{tikzpicture}
 }
 \end{frame}
@@ -276,7 +277,7 @@
 \begin{tikzpicture}
 \node at (-7,-3.5) {~};
 \node at (7,3.5) {~};
-\node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-5,2) {Current\\Consensus};
+\node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-6.5,2) {Current\\Consensus};
 \node [anchor=north,inner sep=0pt] (cons) at ($(constitle.south) + (0,-.2)$) {\longconsensus};
 \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
 \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
@@ -285,7 +286,7 @@
 \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
 \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
-\node [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(2.5,3)!(constitle.south east)$) {SNIPs};
+\node [font=\large,anchor=south] (sniptitle) at ($(constitle.south west)!(.9,3)!(constitle.south east)$) {SNIPs};
 \node [anchor=north,inner sep=0pt] (snip1) at ($(sniptitle.north)!(d1.north)!(sniptitle.south)$) {\snipdoc};
 \node [anchor=north,inner sep=0pt] (snip2) at ($(sniptitle.north)!(d2.north)!(sniptitle.south)$) {\snipdoc};
 \node [anchor=north,inner sep=0pt] (snip3) at ($(sniptitle.north)!(d3.north)!(sniptitle.south)$) {\snipdoc};
@@ -295,10 +296,12 @@
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d2.east)!.3cm!(snip2.west)$) -- ($(d2.east)!.95!(snip2.west)$);
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d3.east)!.3cm!(snip3.west)$) -- ($(d3.east)!.95!(snip3.west)$);
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($(d4.east)!.3cm!(snip4.west)$) -- ($(d4.east)!.95!(snip4.west)$);
-\node<1-> [font=\large,anchor=south] (endivetitle) at ($(constitle.south west)!(5,3)!(constitle.south east)$) {ENDIVE};
+\node<1-> [font=\large,anchor=south] (endivetitle) at ($(constitle.south
+  west)!(3.5,3)!(constitle.south east)$) {ENDIVE};
 \node<1-> [anchor=north,inner sep=0pt] (endive) at ($(endivetitle.north)!(snip1.north)!(endivetitle.south)$) {\docendive};
 \draw<1-> [line width=2pt,double,thick,double equal sign distance,-implies] ($($(snip1.north east)!(endive.west)!(snip1.south east)$)!.1!(endive.west)$) -- ($($(snip1.north east)!(endive.west)!(snip1.south east)$)!.9!(endive.west)$);
-\node<2-> [font=\large,text centered,text width=.2\textwidth,anchor=south] (newconstitle) at ($(constitle.south west)!(0,3)!(constitle.south east)$) {New\\Consensus};
+\node<2-> [font=\large,text centered,text width=.2\textwidth,anchor=south]
+  (newconstitle) at ($(constitle.south west)!(-1.5,3)!(constitle.south east)$) {New\\Consensus};
 \node<2-> [anchor=north,inner sep=0pt] (newnetdoc) at ($(netdoc.north west)!(newconstitle.south)!(netdoc.north east)$) {\netdoc};
 \draw<2-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(netdoc.east)!.3cm!(newnetdoc.west)$) -- ($(netdoc.east)!.9!(newnetdoc.west)$);
 \end{tikzpicture}
@@ -313,7 +316,7 @@
 
   \begin{pgfonlayer}{background}
 
-    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R1) at (6, -1) {$R_1$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -345,7 +348,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -.5) {$R_3$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -362,7 +365,7 @@
     {\scalebox{0.5}{\snipdoc}};
 
 
-    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (5.5, 3) {$R_4$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R4.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -378,7 +381,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (9.6, -1) {$R_5$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R5.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -462,7 +465,7 @@
 
   \begin{pgfonlayer}{background}
 
-    \node[circle,draw,minimum size=1.5cm] (R1) at (7, -1) {$R_1$};
+    \node[circle,draw,minimum size=1.5cm] (R1) at (6, -1) {$R_1$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -494,7 +497,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -.5) {$R_3$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -511,7 +514,7 @@
     {\scalebox{0.5}{\snipdoc}};
 
 
-    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
+    \node[circle,draw,minimum size=1.5cm] (R4) at (5.5, 3) {$R_4$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R4.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -527,7 +530,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R5) at (10, -1) {$R_5$};
+    \node[circle,draw,minimum size=1.5cm] (R5) at (9.6, -1) {$R_5$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R5.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -558,6 +561,9 @@
     {\scalebox{0.5}{\snipdoc}};
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \draw<1>[line width=1pt,->] (user1.east) -- (R1.north) node [below, midway]
     {$\pgfuseimage{clikey}_1, \pgfuseimage{clivrfkey}_1$};
@@ -661,10 +667,8 @@
   \begin{itemize}
     \item<1-> The design of Tor today imposes impractical overheads to clients as
       the network scales.
-    \item<1->[]~
     \item<2-> Walking Onions removes the per-relay bandwidth and storage cost to
       clients.
-    \item<2->[]~
     \item<3-> Walking Onions offers the same security protections against epistemic
       and route capture attacks as prior designs that required a globally
       consistent view.
