@@ -90,8 +90,9 @@
 \begin{frame}
 \frametitle{Motivation}
   \begin{itemize}
-    \item<1-> \textbf{Enable Scalability.} Ensure that client and relay growth
-      does not cause prohibitive bandwidth/cpu overhead to clients.
+    \item<1-> \textbf{Enable Scalability.} Remove the requirement that every
+      client maintains up-to-date information about every relay, a current
+      requirement for security.
     \item<1>[]~
     \item<2> \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
   \end{itemize}
@@ -225,16 +226,39 @@
     \item<1-> \textbf{Globally Consistent View.} Consensus size grows quadratically
       relative to the number of relays, which all clients must maintain!
     \item<1->[]~
-    \item<2-> \textbf{Goal:} Same protections against eptistemic and route capture
-      attacks but less overhead to clients.
+    \item<2-> \textbf{Goal:}
+      \begin{itemize}
+        \item<3-> Same protections against eptistemic and route
+      capture attacks, but
+        \item<3->[]~
+        \item<4->  \emph{Without} requiring clients to hold a globally
+          consistent network view.
+      \end{itemize}
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \centering
-  \huge
-  Walking Onions
+\begin{frame}{Walking Onions}
+  \begin{itemize}
+    \item<1-> How to represent relay information to enable oblivious
+      selection and individual verfication?
+    \item<2->[]~
+    \item<2-> How to build paths using oblivious relay selection?
+    \item<2->[]~
+    \item<3-> How to perform more efficient circuit construction?
+  \end{itemize}
 \end{frame}
+
+\begin{frame}{Walking Onions}
+  \begin{itemize}
+    \item<1-> \textbf{How to represent relay information to enable oblivious
+      selection and individual verification?}
+    \item<1->[]~
+    \item<1->[]~
+    \item<1->[]~
+    \item<1->[]~
+  \end{itemize}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{New Data Structure: Seperable Network Index Proof (SNIP)}
@@ -306,6 +330,17 @@
 \draw<2-> [line width=2pt,double,thick,double equal sign distance,-implies] ($(netdoc.east)!.3cm!(newnetdoc.west)$) -- ($(netdoc.east)!.9!(newnetdoc.west)$);
 \end{tikzpicture}
 }
+\end{frame}
+
+\begin{frame}{Walking Onions}
+  \begin{itemize}
+    \item<1-> How to represent relay information to enable oblivious
+      selection and individual verification?
+    \item<1->[]~
+    \item<1-> \textbf{How to build paths using oblivious relay selection?}
+    \item<1->[]~
+    \item<1->[]~
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -456,6 +491,17 @@
     {$\pgfuseimage{srvkey}_3$, $\snipdoc_{R_3}$};
 
 \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Walking Onions}
+  \begin{itemize}
+    \item<1-> How to represent relay information to enable oblivious
+      selection and individual verification?
+    \item<1->[]~
+    \item<1-> How to build paths using oblivious relay selection?
+    \item<1->[]~
+    \item<1-> \textbf{How to perform more efficient circuit construction?}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
