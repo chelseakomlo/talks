@@ -99,7 +99,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Our Contributions: Walking Onions}
+\frametitle{What Contributions Does Walking Onions Make?}
   \begin{itemize}
     \item<1-> \textbf{Improved Scalability.} Constant-size bandwidth overhead for
       clients even as new relays are added to the network.
@@ -119,7 +119,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Security Model}
+\frametitle{What is Tor's Existing Security Model?}
 
   \begin{itemize}
     \item<1-> \textbf{Epistemic Attacks}: Users with different views of the
@@ -237,10 +237,10 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Walking Onions}
+\begin{frame}{What improvements does Walking Onions make?}
   \begin{itemize}
     \item<1-> How to represent relay information to enable oblivious
-      selection and individual verfication?
+      selection and individual verification?
     \item<2->[]~
     \item<2-> How to build paths using oblivious relay selection?
     \item<2->[]~
@@ -248,7 +248,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Walking Onions}
+\begin{frame}{What improvements does Walking Onions make?}
   \begin{itemize}
     \item<1-> \textbf{How to represent relay information to enable oblivious
       selection and individual verification?}
@@ -332,7 +332,7 @@
 }
 \end{frame}
 
-\begin{frame}{Walking Onions}
+\begin{frame}{What improvements does Walking Onions make?}
   \begin{itemize}
     \item<1-> How to represent relay information to enable oblivious
       selection and individual verification?
@@ -493,7 +493,7 @@
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Walking Onions}
+\begin{frame}{What improvements does Walking Onions make?}
   \begin{itemize}
     \item<1-> How to represent relay information to enable oblivious
       selection and individual verification?
@@ -661,7 +661,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Bandwidth Results: Relays}
+\frametitle{Bandwidth Results for Tor Relays}
 \begin{center}
   \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
@@ -685,7 +685,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Bandwidth Results: Clients}
+\frametitle{Bandwidth Results for Tor Clients}
 \begin{center}
   \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
@@ -713,18 +713,20 @@
   \begin{itemize}
     \item<1-> The design of Tor today imposes impractical overheads to clients as
       the network scales.
-    \item<2-> Walking Onions removes the per-relay bandwidth and storage cost to
-      clients.
-    \item<3-> Walking Onions offers the same security protections against epistemic
+    \item<2-> Walking Onions:
+      \begin{itemize}
+        \item<3-> Removes the per-relay bandwidth and storage cost to clients, and
+        \item<4-> Offers the same security protections against epistemic
       and route capture attacks as prior designs that required a globally
       consistent view.
+      \end{itemize}
+    \item<5-> Tor has already begun the specification work to integrate
+      Walking Onions into the Tor protocol.`
     \item[]~
-    \item[]<3->
-
+  \end{itemize}
       \footnotesize{Find our full paper and artifact at
 
-  https://crysp.uwaterloo.ca/software/walkingonions}
-  \end{itemize}
+      https://crysp.uwaterloo.ca/software/walkingonions}
 \end{frame}
 
 \end{document}
