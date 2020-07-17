@@ -10,7 +10,7 @@
 \usepackage{wasysym}
 \usepackage{xcolor}
 \usepackage{caption}
-\usepackage{comment}
+\usepackage{comment, pdfpcnotes}
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
@@ -661,6 +661,12 @@
 \end{frame}
 
 \begin{frame}
+\pnote{- At a network the size of Tor today, relays in Walking Onions already use
+  4-6x less bandwidth with Walking Onions than Vanilla Onion Routing.}
+
+\pnote{- At a network 10x the size of Tor, relays in Walking Onions use 25-40x
+  less bandwidth than Vanilla Onion Routing.}
+
 \frametitle{Bandwidth Results for Tor Relays}
 \begin{center}
   \hspace{-1.7cm}
@@ -684,8 +690,21 @@
 \end{center}
 \end{frame}
 
+
 \begin{frame}
 \frametitle{Bandwidth Results for Tor Clients}
+  \pnote{- For one version of Walking Onions (when threshold signatures are used
+  for signing SNIPS), bandwidth overhead to clients effectively remains
+  constant as the network size grows.}
+  \pnote{- For the other version (when Merkle signatures are used
+  for signing SNIPS), bandwidth overhead to clients grows logarithmically
+  relative to the size of the network.}
+  \pnote{- Vanilla, grows linearly relative to the network size.}
+  \pnote{- At a network the size of Tor today, clients in Walking Onions already
+  save 10-15x bandwidth}
+  \pnote{At a network 10x the size of Tor, clients in Walking Onions
+  save 90-150x bandwidth}
+
 \begin{center}
   \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
