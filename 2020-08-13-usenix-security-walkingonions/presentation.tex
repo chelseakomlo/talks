@@ -334,7 +334,6 @@
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
 
-
   \begin{pgfonlayer}{background}
 
     \node[circle,draw,minimum size=1.5cm] (R1) at (6, -1) {$R_1$};
@@ -369,7 +368,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, 0) {$R_3$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -418,7 +417,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 3) {$R_6$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (16, 3) {$R_6$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R6.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -444,33 +443,33 @@
     {$\pgfuseimage{srvkey}_1$};
 
     \draw<3>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
-    {5 $\pgfuseimage{clikey}_5$};
+    {2 $\pgfuseimage{clikey}_2$};
 
-    \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {$\pgfuseimage{clikey}_5$};
+    \draw<4>[line width=1pt,->] (R1.east) -- (R2.west) node [below, midway]
+    {$\pgfuseimage{clikey}_2$};
 
 
-    \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
-    \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_5$};
+    \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R2.west) node {};
+    \draw<5>[line width=1pt,->] (R2.west) -- (R1.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_2$};
 
     \draw<6>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_5$, $\snipdoc_{R_5}$};
+    {$\pgfuseimage{srvkey}_2$, $\snipdoc_{R_2}$};
 
     \draw<7>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
     {3 $\pgfuseimage{clikey}_3$};
 
-    \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    \draw<8>[line width=1pt,->] (R1.east) -- (R2.west) node [below, midway]
     {3 $\pgfuseimage{clikey}_3$};
 
-    \draw<9>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
+    \draw<9>[line width=1pt,->] (R2.east) -- (R3.west) node [below, midway]
     {$\pgfuseimage{clikey}_3$};
 
-    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
-    \draw<10>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
+    \draw<10->[draw=green, line width=3pt,-] (R2.east) -- (R3.west) node {};
+    \draw<10>[line width=1pt,->] (R3.west) -- (R2.east) node [below, midway]
     {$\pgfuseimage{srvkey}_3$};
 
-    \draw<11>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
+    \draw<11>[line width=1pt,->] (R2.west) -- (R1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_3$, $\snipdoc_{R_3}$};
 
     \draw<12>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
@@ -496,7 +495,6 @@
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
 
   \begin{pgfonlayer}{background}
-
     \node[circle,draw,minimum size=1.5cm] (R1) at (6, -1) {$R_1$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
@@ -529,7 +527,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -.5) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (14, 0) {$R_3$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -578,7 +576,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 3) {$R_6$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (16, 3) {$R_6$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R6.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
