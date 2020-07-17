@@ -86,27 +86,28 @@
         \maketitle
 \end{frame}
 
-
 \begin{frame}
 \frametitle{Motivation}
   \begin{itemize}
-    \item<1-> \textbf{Enable Scalability.} Remove the requirement that every
-      client maintains up-to-date information about every relay, a current
-      requirement for security.
-    \item<1>[]~
-    \item<2> \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
+    \item<1-> \textbf{Scalability.} Remove the requirement that every
+      Tor client maintains up-to-date information about every relay.
+    \item<1->[]~
+    \item<2-> \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
+    \item<2->[]~
+    \item<3> \textbf{Tor as a Case Study.} We want our results to be applicable
+      to other anonymity network designs.
   \end{itemize}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{What Contributions Does Walking Onions Make?}
   \begin{itemize}
-    \item<1-> \textbf{Improved Scalability.} Constant-size bandwidth overhead for
-      clients even as new relays are added to the network.
-    \item<1->[]~
-    \item<2-> \textbf{Maintains Tor's Existing Security Model.} One variant has no change,
+    \item<1-> \textbf{Constant-Size Client Overhead.} Even
+      as new relays join the network, client bandwidth overhead remains
+      constant (or at worst logarithmic).
+    \item<2-> \textbf{No Change in Tor's Existing Security Model.} One variant has no change,
       the other a slight loss of forward secrecy.
-    \item<2->[]~
     \item<3-> \textbf{Immediate Performance Improvements.} Demonstrates
       improvements at networks the size of Tor today.
   \end{itemize}
@@ -116,19 +117,6 @@
   \centering
   \huge
   Current Tor
-\end{frame}
-
-\begin{frame}
-\frametitle{What is Tor's Existing Security Model?}
-
-  \begin{itemize}
-    \item<1-> \textbf{Epistemic Attacks}: Users with different views of the
-      network can be distinguished by their relay selection.
-    \item<1->[]~
-    \item<2-> \textbf{Route-Capture Attacks}: When an adversary can influence
-      users' relay selection.
-  \end{itemize}
-
 \end{frame}
 
 \begin{frame}
@@ -204,11 +192,11 @@
     \draw<8>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {\textbf{Extend} $R_6$ $\pgfuseimage{clikey}_6$};
 
-    \draw<9>[line width=1pt,->] (R5.east) -- (R6.west) node [below, midway]
+    \draw<9>[line width=1pt,->] (R5.east) -- (R6.north) node [below, midway]
     {$\pgfuseimage{clikey}_6$};
 
     \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R6.west) node {};
-    \draw<10>[line width=1pt,->] (R6.west) -- (R5.east) node [below, midway]
+    \draw<10>[line width=1pt,->] (R6.north) -- (R5.east) node [below, midway]
     {$\pgfuseimage{srvkey}_6$};
 
     \draw<11>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
@@ -220,20 +208,18 @@
 \end{tikzpicture}
 \end{frame}
 
+
 \begin{frame}
 \frametitle{Tor Security Model: Security over Scalability}
   \begin{itemize}
-    \item<1-> \textbf{Globally Consistent View.} Consensus size grows quadratically
-      relative to the number of relays, which all clients must maintain!
-    \item<1->[]~
-    \item<2-> \textbf{Goal:}
-      \begin{itemize}
-        \item<3-> Same protections against eptistemic and route
-      capture attacks, but
-        \item<3->[]~
-        \item<4->  \emph{Without} requiring clients to hold a globally
-          consistent network view.
-      \end{itemize}
+    \item<1-> \textbf{Epistemic Attacks}: Users with different views of the
+      network can be distinguished by their relay selection.
+    \item<2->[] \textbf{Tor's Protection}: All clients to maintain an
+      up-to-date consensus copy.
+    \item<3-> \textbf{Route-Capture Attacks}: When an adversary can influence
+      users' relay selection.
+    \item<4->[] \textbf{Tor's Protection}: Clients verify relay responses
+      using the relay's signing keys in the consensus.
   \end{itemize}
 \end{frame}
 
@@ -661,6 +647,13 @@
 \end{frame}
 
 \begin{frame}
+\pnote{We measure our results using a simulation of Vanilla Onion Routing and
+  Walking Onions}
+
+\pnote{See our project page for more details on the simulator. The
+  simulation uses roughly the same ratio of clients to relays in
+  today's Tor.}
+
 \pnote{- At a network the size of Tor today, relays in Walking Onions already use
   4-6x less bandwidth with Walking Onions than Vanilla Onion Routing.}
 
