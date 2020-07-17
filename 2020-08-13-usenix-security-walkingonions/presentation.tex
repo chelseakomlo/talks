@@ -195,7 +195,7 @@
     \draw<9>[line width=1pt,->] (R5.east) -- (R6.north) node [below, midway]
     {$\pgfuseimage{clikey}_6$};
 
-    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R6.west) node {};
+    \draw<10->[draw=green, line width=3pt,-] (R5.east) -- (R6.north) node {};
     \draw<10>[line width=1pt,->] (R6.north) -- (R5.east) node [below, midway]
     {$\pgfuseimage{srvkey}_6$};
 
@@ -219,7 +219,7 @@
     \item<3-> \textbf{Route-Capture Attacks}: When an adversary can influence
       users' relay selection.
     \item<4->[] \textbf{Tor's Protection}: Clients verify relay responses
-      using the relay's signing keys in the consensus.
+      using signing keys in the consensus.
   \end{itemize}
 \end{frame}
 
@@ -641,12 +641,6 @@
 
 
 \begin{frame}
-  \centering
-  \huge
-  Performance Evaluation
-\end{frame}
-
-\begin{frame}
 \pnote{We measure our results using a simulation of Vanilla Onion Routing and
   Walking Onions}
 
@@ -654,12 +648,12 @@
   simulation uses roughly the same ratio of clients to relays in
   today's Tor.}
 
-\pnote{- At a network the size of Tor today, relays in Walking Onions already use
-  4-6x less bandwidth with Walking Onions than Vanilla Onion Routing.}
+  \centering
+  \huge
+    Performance Evaluation
+\end{frame}
 
-\pnote{- At a network 10x the size of Tor, relays in Walking Onions use 25-40x
-  less bandwidth than Vanilla Onion Routing.}
-
+\begin{frame}
 \frametitle{Bandwidth Results for Tor Relays}
 \begin{center}
   \hspace{-1.7cm}
@@ -681,22 +675,18 @@
     \end{tikzpicture}
   \end{minipage}
 \end{center}
-\end{frame}
 
+  \footnotesize
+  \begin{itemize}
+    \item<2-> Improvement of 4-6 times less bandwidth in Walking Onions over
+      Vanilla Onion Routing at a network the size of Tor today.
+    \item<3> Improvement of 25-40 times less bandwidth at a network 10 times
+      the size of Tor.
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{Bandwidth Results for Tor Clients}
-  \pnote{- For one version of Walking Onions (when threshold signatures are used
-  for signing SNIPS), bandwidth overhead to clients effectively remains
-  constant as the network size grows.}
-  \pnote{- For the other version (when Merkle signatures are used
-  for signing SNIPS), bandwidth overhead to clients grows logarithmically
-  relative to the size of the network.}
-  \pnote{- Vanilla, grows linearly relative to the network size.}
-  \pnote{- At a network the size of Tor today, clients in Walking Onions already
-  save 10-15x bandwidth}
-  \pnote{At a network 10x the size of Tor, clients in Walking Onions
-  save 90-150x bandwidth}
 
 \begin{center}
   \hspace{-1.7cm}
@@ -718,6 +708,14 @@
     \end{tikzpicture}
   \end{minipage}
 \end{center}
+
+  \footnotesize
+  \begin{itemize}
+    \item<2->  Clients in Walking Onions save 10-15 times the bandwidth over
+      Vanilla Onion Routing in a network the size of Tor today.
+    \item<3->  In a network 10 times the size of Tor, Walking Onions saves
+      clients 90-150 times the bandwidth over Vanilla Onion Routing.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
