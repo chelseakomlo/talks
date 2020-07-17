@@ -255,9 +255,13 @@
 \node [font=\large,text centered,text width=.2\textwidth] (constitle) at (-6.5,2) {Current\\Consensus};
 \node [anchor=north,inner sep=0pt] (cons) at ($(constitle.south) + (0,-.2)$) {\longconsensus};
 \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(1.5,0)$) {\netdocunsigned};
+\node<1> [font=\footnotesize,text centered,text width=.2\textwidth] (netdoctitle) at
+  ($(netdoc.north east)+(1,0)$) {Network\\Parameters};
 \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,-.1)$) {\shortdoc};
 \node [anchor=north,inner sep=0pt] (d2) at (d1.south) {\shortdoc};
 \node [anchor=north,inner sep=0pt] (d3) at (d2.south) {\shortdoc};
+\node<1> [font=\footnotesize,text centered,text width=.2\textwidth] (netdoctitle) at
+  ($(d3.north east)+(.7,0)$) {Relay\\Entries};
 \node [anchor=south,inner sep=0pt] (d4) at ($(cons.south west)!(d2.south)!(cons.south east)$) {\shortdoc};
 \node [anchor=north,inner sep=0pt] at ($(d3.south)+(0,.1)$) {$\mathbf{\vdots}$};
 \draw [line width=2pt,double,thick,double equal sign distance,-implies] ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.1!(cons.east)$) -- ($($(netdoc.north west)!(cons.east)!(netdoc.south west)$)!.9!(cons.east)$);
