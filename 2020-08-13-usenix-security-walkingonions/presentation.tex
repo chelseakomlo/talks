@@ -11,6 +11,7 @@
 \usepackage{xcolor}
 \usepackage{caption}
 \usepackage{comment, pdfpcnotes}
+\urlstyle{same}
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
@@ -18,7 +19,6 @@
 \usepackage{tikz}
 \usepackage{tikzpeople}
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.15}
 \usetikzlibrary{arrows}
 
 % Method to add an item that will appear in every slide
@@ -29,20 +29,23 @@
 %
 %}{}
 
-\pgfdeclareimage[height=5ex]{crysplogo}{crysplogo}
-\pgfdeclareimage[height=5ex]{cscslogo}{cscslogo}
-\pgfdeclareimage[height=5ex]{torlogo}{torlogo}
+\pgfdeclareimage[height=9ex]{crysplogo}{crysplogo}
+\pgfdeclareimage[height=9ex]{cscslogo}{CSCSlogo}
+\pgfdeclareimage[height=9ex]{torlogo}{torlogo}
 \pgfdeclareimage[height=1.5ex]{clikey}{key}
 \pgfdeclareimage[height=1.5ex]{srvkey}{key-green}
 \pgfdeclareimage[height=1.5ex]{clivrfkey}{key-blue}
 \pgfdeclareimage[height=1.5ex]{srvvrfkey}{key-red}
 \pgfdeclareimage[height=1cm]{server}{server}
 
+
 \titlegraphic{
+\vspace{-2ex}
 %\raisebox{1ex}{
-%\pgfuseimage{crysplogo}~~~
-\pgfuseimage{cscslogo}~~~
-\pgfuseimage{torlogo}
+\pgfuseimage{crysplogo}~~~
+    \hspace{1em}
+    \hspace{1em}
+\raisebox{0.5ex}{\pgfuseimage{torlogo}}
 %}
 }
 
@@ -73,10 +76,10 @@
 \tikzset{>=latex}
 
 
-\title[Walking Onions]{Walking Onions: Scaling Anonymity Networks while Protecting Users}
-\author{\textbf{Chelsea Komlo}, Nick Mathewson, Ian Goldberg}
-%\institute{\small{Presented at USENIX Security}}
-\date{Presented at USENIX Security \\ 13 August, 2020}
+\title[Walking Onions]{Walking Onions: Scaling Anonymity \\ Networks while Protecting Users}
+\author[Chelsea Komlo, Nick Mathewson, Ian Goldberg]{\textbf{Chelsea H. Komlo}$^1$, Nick Mathewson$^2$, Ian Goldberg$^1$}
+\institute[]{\small $^1$ University of Waterloo\hspace{4em}$^2$ The Tor Project}
+\date[13 August 2020]{USENIX Security Symposium, 13 August 2020}
 
 \begin{document}
 \setbeamertemplate{itemize items}[triangle]
@@ -87,43 +90,20 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Motivation}
-  \begin{itemize}
-    \item<1-> \textbf{Scalability.} Remove the requirement that every
-      Tor client maintains up-to-date information about every relay.
-    \item<1->[]~
-    \item<2-> \textbf{Maintain User Safety.} Maintain the existing security model of Tor.
-    \item<2->[]~
-    \item<3> \textbf{Tor as a Case Study.} We want our results to be applicable
-      to other anonymity network designs.
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{What Contributions Does Walking Onions Make?}
-  \begin{itemize}
-    \item<1-> \textbf{Constant-Size Client Overhead.} Even
-      as new relays join the network, client bandwidth overhead remains
-      constant (or at worst logarithmic).
-    \item<2-> \textbf{No Change in Tor's Existing Security Model.} One variant has no change,
-      the other a slight loss of forward secrecy.
-    \item<3-> \textbf{Immediate Performance Improvements.} Demonstrates
-      improvements at networks the size of Tor today.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
+\frametitle{Tor is a privacy-enhancing tool to use the \\ Internet privately and
+  circumvent censorship.}
   \centering
-  \huge
-  Current Tor
+  \scalebox{0.30} {
+    \includegraphics{torbrowser.png}
+  }
 \end{frame}
 
 \begin{frame}
-\frametitle{Current Tor Path Selection and Circuit Extension}
+\frametitle{Tor Path Selection Circuit Extension}
 \footnotesize
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (-5,-1) {};
+  \node (s2) at (6.5,-2.5) {\pgfuseimage{server}};
 
   \begin{pgfonlayer}{backbackground}
     \node [anchor=north,inner sep=0pt] (cons) at ($(user1.north west)+(-1,0)$)
@@ -176,7 +156,6 @@
     \draw<4>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
     {$\pgfuseimage{clikey}_5$};
 
-
     \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
     \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_5$};
@@ -205,6 +184,9 @@
     \draw<12>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
     {$\pgfuseimage{srvkey}_6$};
 
+    \draw<13>[draw=blue, line width=3pt,->] (R6.south) -- (s2.west) node
+    [below, midway] {};
+
 \end{tikzpicture}
 \end{frame}
 
@@ -212,6 +194,7 @@
 \begin{frame}
 \frametitle{Tor Security Model: Security over Scalability}
   \begin{itemize}
+  \setlength\itemsep{2ex}
     \item<1-> \textbf{Epistemic Attacks}: Users with different views of the
       network can be distinguished by their relay selection.
     \item<2->[] \textbf{Tor's Protection}: All clients to maintain an
@@ -223,7 +206,23 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{What improvements does Walking Onions make?}
+\begin{frame}
+\frametitle{Contributions of Walking Onions}
+  \begin{itemize}
+  \setlength\itemsep{2ex}
+    \item<1-> \textbf{Constant-Size Client Overhead.} Client bandwidth overhead
+      remains constant even as new relays join (or at worst logarithmic).
+    \item<2-> \textbf{Maintains Tor's Existing Security Model.} One variant has no change,
+      the other a slight loosening of forward secrecy (for path
+      selection, not content).
+    \item<3-> \textbf{Immediate Performance Improvements.} Demonstrates
+      improvements at networks the size of Tor today.
+    \item<4-> \textbf{Generally Applicable.} Aspects of Walking
+      Onions apply to network designs beyond Tor.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Improvements of Walking Onions}
   \begin{itemize}
     \item<1-> How to represent relay information to enable oblivious
       selection and individual verification?
@@ -245,9 +244,8 @@
   \end{itemize}
 \end{frame}
 
-
 \begin{frame}
-  \frametitle{New Data Structure: Seperable Network Index Proof (SNIP)}
+  \frametitle{New Data Structure: Seperable Network \\ Index Proof (SNIP)}
 \centerline{%
 \begin{tikzpicture}
 \node at (-7,-3.5) {~};
@@ -337,6 +335,7 @@
 \frametitle{Telescoping Walking Onions}
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+  \node [anchor=north,inner sep=0pt] (newnetdoc) at ($(user1.south) + (0, -.25)$) {\netdoc};
 
   \begin{pgfonlayer}{background}
 
@@ -372,7 +371,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, 0) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (13, -1) {$R_3$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -421,7 +420,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R6) at (16, 3) {$R_6$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (16, 1) {$R_6$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R6.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -497,23 +496,24 @@
 \frametitle{Single-Pass Walking Onions}
 \begin{tikzpicture}
   \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
+  \node [anchor=north,inner sep=0pt] (newnetdoc) at ($(user1.south) + (0, -.25)$) {\netdoc};
 
   \begin{pgfonlayer}{background}
-    \node[circle,draw,minimum size=1.5cm] (R1) at (6, -1) {$R_1$};
-    \node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
-     {\scalebox{.7} { \docendive} };
-    \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
-    {\scalebox{0.5}{\netdocunsigned }};
-    \node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
-    {\scalebox{0.5}{\snipdoc}};
-    \node [anchor=north,inner sep=0pt] (d2) at (d1.south)
-    {\scalebox{0.5}{\snipdoc}};
-    \node [anchor=north,inner sep=0pt] (d3) at (d2.south)
-    {\scalebox{0.5}{\snipdoc}};
-    \node [anchor=north,inner sep=0pt] (d4) at (d3.south)
-    {\scalebox{0.5}{\snipdoc}};
-    \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
-    {\scalebox{0.5}{\snipdoc}};
+    %\node[circle,draw,minimum size=1.5cm] (R1) at (6, -1) {$R_1$};
+    %\node [anchor=north,inner sep=0pt] (cons) at ($(R1.south east)+(-.15, 0)$)
+    % {\scalebox{.7} { \docendive} };
+    %\node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
+    %{\scalebox{0.5}{\netdocunsigned }};
+    %\node [anchor=north,inner sep=0pt] (d1) at ($(netdoc.south)+(0,0)$)
+    %{\scalebox{0.5}{\snipdoc}};
+    %\node [anchor=north,inner sep=0pt] (d2) at (d1.south)
+    %{\scalebox{0.5}{\snipdoc}};
+    %\node [anchor=north,inner sep=0pt] (d3) at (d2.south)
+    %{\scalebox{0.5}{\snipdoc}};
+    %\node [anchor=north,inner sep=0pt] (d4) at (d3.south)
+    %{\scalebox{0.5}{\snipdoc}};
+    %\node [anchor=north,inner sep=0pt] (d5) at (d4.south)
+    %{\scalebox{0.5}{\snipdoc}};
 
     \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 2) {$R_2$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R2.south east)+(-.15, 0)$)
@@ -531,7 +531,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, 0) {$R_3$};
+    \node[circle,draw,minimum size=1.5cm] (R3) at (13, 1) {$R_3$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R3.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -580,7 +580,7 @@
     \node [anchor=north,inner sep=0pt] (d5) at (d4.south)
     {\scalebox{0.5}{\snipdoc}};
 
-    \node[circle,draw,minimum size=1.5cm] (R6) at (16, 3) {$R_6$};
+    \node[circle,draw,minimum size=1.5cm] (R6) at (16, -1) {$R_6$};
     \node [anchor=north,inner sep=0pt] (cons) at ($(R6.south east)+(-.15, 0)$)
      {\scalebox{.7} { \docendive} };
     \node [anchor=north,inner sep=0pt] (netdoc) at ($(cons.north east)+(-.15, 0)$)
@@ -599,43 +599,43 @@
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    \draw<1>[line width=1pt,->] (user1.east) -- (R1.north) node [below, midway]
+    \draw<1>[line width=1pt,->] (user1.east) -- (R5.west) node [below, midway]
     {$\pgfuseimage{clikey}_1, \pgfuseimage{clivrfkey}_1$};
 
-    \draw<2>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
+    \draw<2>[line width=1pt,->] (R5.east) -- (R3.south) node [below, midway]
     {$\pgfuseimage{clikey}_{1'}, \pgfuseimage{clivrfkey}_{1'}$};
 
-    \draw<3>[line width=1pt,->] (R5.east) -- (R3.west) node [below, midway]
+    \draw<3>[line width=1pt,->] (R3.east) -- (R6.west) node [below, midway]
     {$\pgfuseimage{clikey}_{1''}, \pgfuseimage{clivrfkey}_{1''}$};
 
-    \draw<4->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
-    \draw<4>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_3$};
+    \draw<4->[draw=green, line width=3pt,-] (R3.east) -- (R6.west) node {};
+    \draw<4>[line width=1pt,->] (R6.west) -- (R3.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_6$};
 
-    \draw<5->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
-    \draw<5>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_5, \pgfuseimage{srvkey}_3, \snipdoc_{R_3}$};
+    \draw<5->[draw=green, line width=3pt,-] (R5.east) -- (R3.west) node {};
+    \draw<5>[line width=1pt,->] (R3.west) -- (R5.east) node [below, midway]
+    {$\pgfuseimage{srvkey}_3, \pgfuseimage{srvkey}_6, \snipdoc_{R_6}$};
 
-    \draw<6->[draw=green, line width=3pt,-] (user1.east) -- (R1.north) node
+    \draw<6->[draw=green, line width=3pt,-] (user1.east) -- (R5.west) node
     [below, midway] {};
-    \draw<6>[line width=1pt,->] (R1.north) -- (user1.east) node [above, right]
-    {$\pgfuseimage{srvkey}_5, \pgfuseimage{srvkey}_3, \pgfuseimage{srvkey}_1,
-    \snipdoc_{R_3}, \snipdoc_{R_5}$};
+    \draw<6>[line width=1pt,->] (R5.west) -- (user1.east) node [above, right]
+    {$\pgfuseimage{srvkey}_5, \pgfuseimage{srvkey}_3, \pgfuseimage{srvkey}_6,
+    \snipdoc_{R_3}, \snipdoc_{R_6}$};
   \end{pgfonlayer}
 
   \begin{pgfonlayer}{background}
     \node<2> [fill=yellow,draw=red,ultra thick,font=\large, text
     width=.5\textwidth,anchor=north west,ellipse callout,text centered,callout
-    absolute pointer = {($(R1.north)+(0,0)$)}] at (4,3) {$k \leftarrow
-    DH(\pgfuseimage{clikey},\pgfuseimage{srvkey}_1)$\\ $r \leftarrow
-    VRF_{\pgfuseimage{srvvrfkey}_1}(DH(\pgfuseimage{clivrfkey},\pgfuseimage{srvkey}_1))$
+    absolute pointer = {($(R5.north)+(0,0)$)}] at (4,3) {$k \leftarrow
+    DH(\pgfuseimage{clikey},\pgfuseimage{srvkey}_5)$\\ $r \leftarrow
+    VRF_{\pgfuseimage{srvvrfkey}_5}(DH(\pgfuseimage{clivrfkey},\pgfuseimage{srvkey}_5))$
     };
 
     \node<3> [fill=yellow,draw=red,ultra thick,font=\large, text
     width=.5\textwidth,anchor=north west,ellipse callout,text centered,callout
-    absolute pointer = {($(R5.north)+(0,0)$)}] at (4,3) {$k' \leftarrow
-    DH(\pgfuseimage{clikey}',\pgfuseimage{srvkey}_1)$\\ $r' \leftarrow
-    VRF_{\pgfuseimage{srvvrfkey}_5}(DH(\pgfuseimage{clivrfkey}',\pgfuseimage{srvkey}_1))$ };
+    absolute pointer = {($(R3.west)+(0,0)$)}] at (4,3) {$k' \leftarrow
+    DH(\pgfuseimage{clikey}',\pgfuseimage{srvkey}_3)$\\ $r' \leftarrow
+    VRF_{\pgfuseimage{srvvrfkey}_3}(DH(\pgfuseimage{clivrfkey}',\pgfuseimage{srvkey}_3))$ };
   \end{pgfonlayer}
 
 \end{tikzpicture}
@@ -645,7 +645,6 @@
 \begin{frame}
 \pnote{We measure our results using a simulation of Vanilla Onion Routing and
   Walking Onions}
-
 \pnote{See our project page for more details on the simulator. The
   simulation uses roughly the same ratio of clients to relays in
   today's Tor.}
@@ -657,32 +656,34 @@
 
 \begin{frame}
 \frametitle{Bandwidth Results for Tor Relays}
+
 \begin{center}
   \hspace{-1.7cm}
   \begin{minipage}[t] {0.45\linewidth}
     \vspace*{8em}
     \begin{tikzpicture}
-        \scalebox{0.62} {
-          \includegraphics{relay_ss.pdf}
-        }
+      \scalebox{0.62} {
+        \includegraphics{relay_ss.pdf}
+      }
     \end{tikzpicture}
   \end{minipage}
   \hspace{0.6cm}
   \begin{minipage}[t] {0.45\linewidth}
     \vspace*{8em}
     \begin{tikzpicture}
-    \scalebox{0.62} {
-      \includegraphics{relay_ss_wide.pdf}
-    }
+        \scalebox{0.62} {
+          \includegraphics{relay_ss_wide.pdf}
+        }
     \end{tikzpicture}
   \end{minipage}
 \end{center}
 
-  \footnotesize
+  \small
   \begin{itemize}
-    \item<2-> Improvement of 4-6 times less bandwidth in Walking Onions over
-      Vanilla Onion Routing at a network the size of Tor today.
-    \item<3> Improvement of 25-40 times less bandwidth at a network 10 times
+    \item<2-> Walking Onions requires 4--6 times less bandwidth
+      than Vanilla Onion Routing at a network the size of Tor today.
+    \item<3> Improvement of 25--40 times less bandwidth at a network
+    10 times
       the size of Tor.
   \end{itemize}
 \end{frame}
@@ -711,141 +712,39 @@
   \end{minipage}
 \end{center}
 
-  \footnotesize
+  \small
   \begin{itemize}
-    \item<2->  Clients in Walking Onions save 10-15 times the bandwidth over
+    \item<2->  Clients in Walking Onions save 10--15 times the
+    bandwidth
+    over
       Vanilla Onion Routing in a network the size of Tor today.
-    \item<3->  In a network 10 times the size of Tor, Walking Onions saves
-      clients 90-150 times the bandwidth over Vanilla Onion Routing.
+    \item<3->  In a network 10 times the size of Tor, Walking Onions
+    saves
+      clients 90--150 times the bandwidth over Vanilla.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Takeaways}
   \begin{itemize}
+  \setlength\itemsep{2ex}
     \item<1-> The design of Tor today imposes impractical overheads to clients as
       the network scales.
     \item<2-> Walking Onions:
       \begin{itemize}
-        \item<3-> Removes the per-relay bandwidth and storage cost to clients, and
+        \item<3-> Removes the per-relay bandwidth and storage cost to clients
         \item<4-> Offers the same security protections against epistemic
       and route capture attacks as prior designs that required a globally
       consistent view.
       \end{itemize}
-    \item<5-> Tor has already begun the specification work to integrate
-      Walking Onions into the Tor protocol.`
-    \item[]~
+    \item<5-> Tor has already begun the specification work to
+    integrate Walking Onions into the Tor protocol.
   \end{itemize}
-      \footnotesize{Find our full paper and artifact at
 
-      https://crysp.uwaterloo.ca/software/walkingonions}
+      \let\thefootnote\relax\footnote{
+      Find our paper and artifact at \url{https://crysp.uwaterloo.ca/software/walkingonions}
+      }
 \end{frame}
 
 \end{document}
 
-\begin{frame}
-\frametitle{}
-
-\begin{table}[t]
-\renewcommand{\arraystretch}{1.2}
-\caption{Bonus Slide: Comparison of Telescoping, Single-Pass, Current Tor }
-
-\centering
-\footnotesize
-
-\CIRCLE=achieved; \Circle=not achieved;
-  \LEFTcircle=partially achieved
-
-$\Diamond$=performance property;
-  $\dagger$=security property
-
-    \begin{tabular}{|c|c|c|c|c|}
-  \hline
-  & & Telescop. & Single-Pass & Current Tor \\
-  \hline
-  $\Diamond$ & Constant-size client download & \CIRCLE & \CIRCLE & \Circle \\
-  \hline
-  $\Diamond$ & One round trip per circuit built & \Circle & \CIRCLE & \Circle \\
-  % Start security properties
-  \hline
-  $\dagger$ & \raggedright Complete client control of relays selected & \LEFTcircle & \Circle & \CIRCLE \\
-  \hline
-  $\dagger$ & Forward-secret relay selection& \CIRCLE & \LEFTcircle & \CIRCLE \\
-  \hline
-  $\dagger$ & Forward secrecy for data & \CIRCLE & \CIRCLE & \CIRCLE \\
-  \hline
-  $\dagger$ & \raggedright Relays unaware of their positions in paths & \LEFTcircle & \Circle & \LEFTcircle \\
-  \hline
-\end{tabular}
-
-\end{table}
-\end{frame}
-
-\begin{frame}
-\frametitle{Complex Path Requirements: Multiple Index Ranges}
-\begin{tikzpicture}
-  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
-
-  \begin{pgfonlayer}{background}
-    \node[circle,draw,minimum size=1.5cm] (R1) at (8, -1) {$R_1$};
-    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
-    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
-    \node[circle,draw,minimum size=1.5cm] (R5) at (12, -1.5) {$R_5$};
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
-  \end{pgfonlayer}
-    \draw[draw=green, line width=3pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
-    \draw<1>[line width=1pt,->] (user1.east) -- (R1.west) node [below, midway]
-    {Guard, 5 $\pgfuseimage{clikey}_1$};
-    \draw<2>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {$\pgfuseimage{clikey}_1$};
-    \draw<3->[draw=green, line width=3pt,-] (R1.east) -- (R5.west) node {};
-    \draw<3>[line width=1pt,->] (R5.west) -- (R1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_1$};
-    \draw<4>[line width=1pt,->] (R1.west) -- (user1.east) node [below, midway]
-    {$\pgfuseimage{srvkey}_5$, $\snipdoc_{R_5}$};
-\end{tikzpicture}
-\end{frame}
-
-\begin{frame}
-\frametitle{Complex Path Requirements: Delegated Verfiable Selection}
-\begin{tikzpicture}
-  \node[person,shirt=black,female,minimum size=1.1cm] (user1) at (3,-1) {};
-
-  \begin{pgfonlayer}{background}
-    \node (s2) at (16,1.65) {\pgfuseimage{server}};
-    \node[circle,draw,minimum size=1.5cm] (R1) at (8, -1) {$R_1$};
-    \node[circle,draw,minimum size=1.5cm] (R2) at (10.5, 1) {$R_2$};
-    \node[circle,draw,minimum size=1.5cm] (R3) at (14, -.5) {$R_3$};
-    \node[circle,draw,minimum size=1.5cm] (R4) at (7.5, 3) {$R_4$};
-    \node[circle,draw,minimum size=1.5cm] (R5) at (12, -1.5) {$R_5$};
-    \node[circle,draw,minimum size=1.5cm] (R6) at (13, 2.5) {$R_6$};
-  \end{pgfonlayer}
-    \draw[draw=green, line width=4pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
-    \draw[draw=green, line width=4pt,-] (R1.east) -- (R5.west) node {};
-    \draw[draw=green, line width=4pt,-] (R5.east) -- (R3.west) node {};
-
-    \draw[draw=blue, line width=2pt,-] (user1.east) -- (R1.west) node
-    [below, midway] {};
-    \draw[draw=blue, line width=2pt,-] (R1.east) -- (R5.west) node {};
-    \draw[draw=blue, line width=2pt,-] (R5.east) -- (R3.west) node {};
-    \draw [line width=2pt,-] (R3.east) to (16, 1.3);
-    \node<2> [inner sep=1pt,font=\Huge,text=red] (block) at (15.5, .6) {$\mathbf{\times}$};
-    \draw<2> [line width=2pt,draw=red,dashed,->] ($(R3)+(-.2,.2)$) to[out=110,in=0] ($(R2)+(.4,-.1)$);
-    \draw<2>[line width=1pt,->] (R1.east) -- (R5.west) node [below, midway]
-    {$\pgfuseimage{clikey}_1$};
-\end{tikzpicture}
-\end{frame}
-
-
-% Bonus slides
-\begin{frame}
-\frametitle{Simulation}
-TODO Simulation description
-\end{frame}
-
-\begin{frame}
-\frametitle{CPU}
-\end{frame}
