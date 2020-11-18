@@ -1,0 +1,394 @@
+% https://nymity.ch/tikz/
+
+\documentclass[hyperref={pdfpagelabels=true},table,dvipsnames,14pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsthm, amsfonts, amssymb, amsmath, graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts, txfonts}
+\usepackage{wasysym}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{comment, pdfpcnotes}
+\usepackage{cryptocode}
+\urlstyle{same}
+\usepackage{framed}
+\FrameSep5pt
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\usepackage{tikz}
+\usepackage{tikzpeople}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+
+\usepackage{capt-of}
+\beamertemplatenavigationsymbolsempty
+\setbeamercovered{transparent}
+
+\newcommand{\sigagg}{\mathcal{SA}}
+\newcommand{\random}{\overset{\$}{\leftarrow}}
+
+% Method to add an item that will appear in every slide
+%\addtobeamertemplate{footline}{%
+%
+%  \tikz[remember picture, overlay] \fill[blue] (current page.south east)
+%    rectangle ++(1cm,2cm);
+%
+%}{}
+
+\pgfdeclareimage[height=7ex]{crysplogo}{crysplogo}
+%\pgfdeclareimage[height=9ex, width=30ex]{cscslogo}{CSCSlogo}
+\pgfdeclareimage[height=7ex]{zfndlogo}{zfndlogo}
+
+\titlegraphic{
+\vspace{-1ex}
+%\raisebox{1ex}{
+\pgfuseimage{crysplogo}~~~
+    \hspace{1em}
+    \hspace{1em}
+%\raisebox{0.5ex}{\pgfuseimage{cscslogo}}
+%    \hspace{1em}
+%    \hspace{1em}
+\pgfuseimage{zfndlogo}~~~
+%}
+}
+
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{backbackground}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{backbackground,background,main,foreground}   %% some additional layers for demo
+
+\usetikzlibrary{shapes,decorations.shapes}
+\tikzset{>=latex}
+
+
+\title[FROST]{FROST: \\ Flexible Round-Optimized \\ Schnorr Threshold Signatures}
+\author[Chelsea Komlo, Ian Goldberg]{\textbf{Chelsea Komlo}$^{1,2}$
+\hspace{2em} Ian Goldberg$^1$}
+\institute[]{\small $^1$ University of Waterloo\hspace{4em}$^2$ Zcash
+Foundation}
+\date[November 2020]{ \small NIST Workshop on Multi-Party Threshold Schemes, October 2020}
+
+\begin{document}
+\setbeamertemplate{itemize items}[triangle]
+
+\begin{frame}
+        \thispagestyle{empty}
+        \maketitle
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Threshold Signatures: Joint Public \\ Key, Secret-Shared Private Key}
+
+\begin{tikzpicture}
+      \begin{pgfonlayer}{foreground}
+    \node<2> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(9.2,1)}] at (12,1) { The full secret
+        is never reconstructed! Participants perform signing using only their secret
+        share.};
+      \end{pgfonlayer}
+      \begin{pgfonlayer}{main}
+      \node[person,shirt=black,female, minimum size=1.1cm] (p2) at (7.5,1) {
+        $\includegraphics[width=.075\textwidth]{images/seckey.png}_\text{\bf
+        Secret Share 1}$
+      };
+      \node[person,shirt=black, female, minimum size=1.1cm] (p6) at (9,-2) {
+        $\includegraphics[width=.075\textwidth]{images/seckey.png}_\text{\bf
+        Secret Share 2}$
+      };
+      \node[person,shirt=black,female, minimum size=1.1cm] (p7) at (13,1) {
+        $\includegraphics[width=.075\textwidth]{images/seckey.png}_\text{\bf
+        Secret Share 3}$
+      };
+
+      \end{pgfonlayer}
+
+      \begin{pgfonlayer}{backbackground}
+      \node[circle, minimum size = 5.4cm, color=lightgray,
+        fill=lightgray]  (circ) at (10.5,-0.5){};
+      \end{pgfonlayer}
+      \begin{pgfonlayer}{background}
+          \node[ellipse, draw=red, line width = 2pt,
+          minimum width = 9.25cm, minimum height =3cm] at (10,0.5) {\small
+          \bf Signing Set};
+      \end{pgfonlayer}
+
+       \node[outer sep = 2mm] (pubkey) at (18,-0.5)
+       {
+         $\includegraphics[width=.15\textwidth]{images/pubkey.png}_\text{\bf
+         Public Key (1,2,3)}$  };
+
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Contributions of FROST}
+
+  \begin{itemize}
+    \item<1-> Two-round threshold signing protocol, or single-round \\ protocol with
+    preprocessing
+    \item[]
+    \item<2-> Signing operations are secure when performed concurrently,
+      improving upon prior similar schemes.
+    \item[]
+    \item<3-> Signing can be performed with a threshold $t$ number of signers,
+      where $t$ can be less than the number of possible signers $n$.
+    \item[]
+    \item<4-> Secure against an adversary that controls up to $t-1$ signers.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Tradeoffs Among Constructions}
+
+  \begin{itemize}
+    \item<1-> \textbf{Number of Signing Rounds:} Required network rounds to
+      generate one signature.
+    \item<2-> \textbf{Robust:} Can the protocol complete when participants
+      misbehave?
+    \item<3-> \textbf{Required Number of Signers:} Can a signature be
+    created by just $t$ participants, or are all $n$ needed?
+    \item<4-> \textbf{Parallel Secure:} Can signing operations be done in
+      parallel without a reduction in security (Drijvers attack)?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tradeoffs Among Constructions}
+
+  \begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{c|c c c c}
+      & \textbf{Num. Rounds} & \textbf{Robust} & \textbf{Num. Signers}&
+      \textbf{Parallel Secure} \\
+      \hline
+      Stinson Strobl & 4 & Yes & $t$ & Yes \\
+      \hline
+      Gennaro et al. & 1 w/ preprocessing & No & $n$ & No \\
+      \hline
+      FROST & 1 w/ preprocessing & No & $t$ & Yes \\
+    \end{tabular}
+\end{table}
+\end{frame}
+
+\pnote{
+Schnorr signatures are the standard $\Sigma$-protocol proof of
+knowledge of the discrete logarithm of $Y$ made non-interactive
+with the Fiat-Shamir transform.
+
+}
+\begin{frame}
+  \centering
+\scalebox{0.9} {
+\procedure{Single-Party Schnorr Signing and Verification}{
+  \textbf{Signer}  \< \< \textbf{Verifier} \\
+  \uncover<1-> { (x, Y) \leftarrow \mathit{KeyGen()} \\ }
+  \uncover<2-> { \< \sendmessageleft{top=\text{$(m, Y)$}} \< \\ }
+  \uncover<3-> { k \random \mathbb{Z}_q} \\
+  \uncover<4-> { R = g^k \in \mathbb{G} } \\
+  \uncover<5-> { c = H(R, Y, m) \\ }
+  \uncover<6-> { z = k + c \cdot x \\ }
+  \uncover<7-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
+  \< \< \uncover<8-> { c = H(R, Y, m) \\ }
+  \< \< \uncover<9-> { R' = g^z \cdot Y^{-c} \\ }
+  \< \< \uncover<10-> { \text{Output } R \stackrel{?}{=} R' \\ }
+}
+}
+\end{frame}
+
+\begin{frame}
+  \frametitle{FROST Keygen}
+
+  \begin{itemize}
+    \item<1-> Can be performed by either a trusted dealer or a Distributed Key
+      Generation (DKG) Protocol
+    \item[]
+    \item<2-> The DKG is an $n$-wise Shamir Secret Sharing protocol, with each
+      participant acting as a dealer
+    \item[]
+    \item<3> After KeyGen, each participant holds secret share $s_i$ and
+      public key $Y_i$ (used for verification during signing) with joint public key $Y$.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{FROST Sign}
+
+  \begin{itemize}
+    \item<1-> Can be performed in two rounds, or optimized to single round with
+      preprocessing
+    \item[]
+    \item<2-> We show here with a signature aggregator, but can be
+      performed without centralized roles
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \centering
+\scalebox{1.0} {
+\procedure{FROST Preprocess}{
+  \textbf{Participant i}  \< \< \textbf{Commitment Server} \\
+    \uncover<1-> { ((d_{ij}, e_{ij}), \dots) \random \mathbb{Z}_q^* \times \mathbb{Z}_q^* \\ }
+    \uncover<2-> { (D_{ij}, E_{ij}) = (g^{d_{ij}}, g^{e_{ij}}) \\ }
+    \uncover<3-> { \text{Store } ((d_{ij}, D_{ij}), (e_{ij}, E_{ij}), \dots) \\ }
+    \uncover<4-> { \< \sendmessageright{top=\text{$((D_{ij}, E_{ij}), \dots)$}} \< \\ }
+    \uncover<5-> { \< \< \text{Store } ((D_{ij}, E_{ij}), \dots) \\ }
+}
+}
+\end{frame}
+
+\begin{frame}
+  \centering
+\begin{tikzpicture}
+\node at (0,0) {
+\scalebox{0.9} {
+\procedure{FROST Sign}{
+  \textbf{Signer i}  \< \textbf{Signature Aggregator} \\
+  \uncover<1-> {\< B=((1, D_1, E_1), \dots, (t, D_t, E_t)) \\}
+  \uncover<2-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
+  \uncover<3-> { \rho_\ell = H_1(\ell, m, B), \ell \in S \\ }
+  \uncover<4-> { R = \prod_{\ell \in S} D_\ell  \cdot ({E_\ell})^{\rho_\ell} \\ }
+  \uncover<5-> { c = H_2(R, Y, m) \\ }
+  \uncover<6-> { z_i = d_i + (e_i \cdot \rho_i) + \lambda_i \cdot s_i \cdot c \\ }
+  \uncover<8-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
+  \uncover<9-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
+}
+}
+};
+\node<3> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(-6.2,0.2)}] at (-1,-1) { ``binding value'' to bind signing shares to $\ell$, $m$, and $B$ };
+\node<7> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(-4.25,-1.5)}] at (1,1) { This step cannot be inverted by
+  anyone who does not know $(d_i, e_i)$.};
+  \node<7>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-5,-1.85) {};
+\node<10> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(3.2,-3.2)}] at (1,1) { Signature format and
+  verification are identical to single-party Schnorr.};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Protocol Complexity}
+
+  \begin{itemize}
+    \item<1-> Per-signer bandwidth overhead for signing scales linearly
+      relative to the number of signers (because of $B$).
+    \item[]~
+    \item<2-> Total bandwidth overhead scales quadratically
+    \item[]~
+    \item<3-> Network round complexity remains constant, assuming centralized
+      commitment storage and signature aggregation
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Compatibility with EdDSA}
+
+  \begin{itemize}
+    \item<1-> Can produce signatures compatible with single-party EdDSA
+      signatures.
+    \item[]
+    \item<2-> Single-round FROST signing cannot be deterministic, but two-round
+      FROST can be (as the nonce in EdDSA is derived in part from the message).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implementation Requirements}
+
+  \begin{itemize}
+    \item<1-> KeyGen requires a trusted, authenticated channel for distributing
+      secret shares.
+    \item[]
+    \item<2-> Signing can be performed over a trustless public channel as all
+      values exchanged during signing are public.
+    \item[]
+    \item<3-> Use of some underlying PKI is required for proving attribution of
+      misbehaviour to a specific signer.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Real-World Applications}
+
+  \begin{itemize}
+    \item<1-> Use in cryptocurrency (Zcash) protocols for signing transactions
+    \item[]
+    \item<2-> Consideration for standardization by CFRG.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Takeaways}
+  \begin{itemize}
+    \item<1-> FROST improves upon prior schemes by defining a
+      single-round threshold signing protocol (with preprocessing) that is
+      secure even when signing is performed concurrently.
+    \item[]
+    \item<2-> The simplicity and flexibility of FROST makes it attractive to
+      real-world applications.
+  \end{itemize}
+      \let\thefootnote\relax\footnote{
+      Find our paper and artifact at
+      \url{https://crysp.uwaterloo.ca/software/frost}.
+      }
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Extras: Security against Drijvers}
+  \small
+
+  \begin{itemize}
+    \item<1->[] Without $\rho_\ell = H_1(\ell, m, B) $,
+  an adversary could produce a $c^*$ such that:
+      \[ c^*= H(R^*, Y, m^*) \uncover<2->{ = \sum_{i=1}^{k} H(R_i, Y, m_i)  =
+      \sum c_i  \text{ for some } (R_i, m_i), \dots } \],
+    \item<3->[] After sending receiving the victim's $z_i$ for each $(R_i, m_i)$, the
+  adversary can produce a valid forgery $\sigma^*=(R^*, z)$, as
+      \[ \uncover<4-> {z = \sum d_i + e_i + \lambda_t \cdot s_t \cdot \sum c_i} = \uncover<5->
+      { \sum d_i + e_i + \lambda_t \cdot s_t \cdot c^*} \]
+    \item<6->[] The binding factor in FROST makes each $z_i$ strongly tied to
+      $(m_i, R_i)$.
+      \[ z = \sum d_i + (e_i * \rho_i) + \lambda_t \cdot s_t \cdot \sum c_i  \]
+    \item<7->[] Resulting in an invalid signature: $R^* \neq g^z \cdot Y^{-c}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extras: Provable Security}
+
+  \begin{itemize}
+    \item<1-> We prove the EUF-CMA security of an interactive variant of FROST,
+      then extend to plain FROST.
+    \item[]
+    \item<2-> FROST-Interactive generates the
+      binding value $\rho_i$ via a one-time VRF to allow for parallelism in our
+      simulator.
+    \item[]
+    \item<3->Recall that plain (non-interactive) FROST generates $\rho_i$ via a
+      hash function.
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
+
+
