@@ -426,19 +426,27 @@ inner sep=2ex,
   \uncover<4-> { R = \prod_{\ell \in S} D_\ell  \cdot ({E_\ell})^{\rho_\ell} \\ }
   \uncover<5-> { c = H_2(R, Y, m) \\ }
   \uncover<6-> { z_i = d_i + (e_i \cdot \rho_i) + \lambda_i \cdot s_i \cdot c \\ }
-  \uncover<8-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
-  \uncover<9-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
+  \uncover<9-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
+  \uncover<10-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
 }
 }
 };
 \node<3> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
   absolute pointer = {(-6.2,0.2)}] at (-1,-1) { ``binding value'' to bind signing shares to $\ell$, $m$, and $B$ };
+
 \node<7> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(-2.25,-1.5)}] at (1,1) { Here, $s= \sum \lambda_i \cdot s_i$, where $\lambda_i$ is a Lagrange coefficient.};
+  \node<7>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-2.85,-1.8) {};
+
+
+\node<8> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
   absolute pointer = {(-4.25,-1.5)}] at (1,1) { This step cannot be inverted by
   anyone who does not know $(d_i, e_i)$.};
-  \node<7>[rectangle, draw=red, line width = 1.5pt,
-  minimum width = 2cm, minimum height =.65cm] at (-5,-1.85) {};
-\node<10> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  \node<8>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-5,-1.8) {};
+
+\node<11> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
   absolute pointer = {(3.2,-3.2)}] at (1,1) { Signature format and
   verification are identical to single-party Schnorr.};
 \end{tikzpicture}
