@@ -128,26 +128,54 @@ inner sep=2ex,
 \end{frame}
 
 \begin{frame}
+  \frametitle{About Me}
+
+  \begin{itemize}
+    \item<1-> Ph.D Candidate at the University of Waterloo, part-time at the Zcash Foundation. 
+    \item[]
+    \item<1-> My work is largely on multi-party schemes.  
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overview}
+
+  \begin{itemize}
+    \item<1-> Review of single-party signatures.
+    \item[]
+    \item<2-> Review of threshold signatures. 
+    \item[]
+    \item<3-> How well do these schemes map to a threshold or multisignature setting? 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \huge 
   Single-Party Signatures 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sigma Protocol}
+
+  \begin{itemize}
+    \item<1-> Recall that a sigma proof of knowledge is a three-move protocol, where:
+  \begin{enumerate}
+	  \item<2->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
+	  \item<3->[2.] The prover begins by \emph{committing} to a random nonce $r$. 
+	  \item<4->[3.] The challenger then \emph{sends} a challenge $c$. 
+	  \item<5->[4.] Using $r$ and $c$, the prover then \emph{outputs} a response $z$. 
+	  \item<6->[5.] Using $(r, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
+  \end{enumerate}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Schnorr Signatures}
 
   \begin{itemize}
-    \item<1-> Sigma proof of knowledge of $\sk$, where $\pk = g^\sk$. 
+    \item<1-> Simply a sigma proof of knowledge of $\sk$, where $\pk = g^\sk$. 
     \item[]
-    \item<2-> Bound to a message $m$ via Fiat-Shamir. 
-    \item[]
-    \item<3-> Recall that a sigma proof of knowledge is a three-move protocol, where:
-  \begin{enumerate}
-	  \item<4->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
-	  \item<4->[2.] The prover begins by \emph{committing} to a random nonce $r$. 
-	  \item<5->[3.] The challenger then \emph{sends} a challenge $c$. 
-	  \item<6->[4.] Using $r$ and $c$, the prover then \emph{outputs} a response $z$. 
-	  \item<7->[5.] Using $(r, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
-  \end{enumerate}
+    \item<2-> Made non-interactive and bound to a message $m$ via Fiat-Shamir. 
   \end{itemize}
 \end{frame}
 
@@ -157,7 +185,7 @@ inner sep=2ex,
 \procedure{Schnorr Identification Protocol}{
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
-  \uncover<3-> { k \random \mathbb{Z}_q } \\
+  \uncover<2-> { k \random \mathbb{Z}_q } \\
   \uncover<3-> { R \gets g^k \in \mathbb{G} } \\
   \uncover<4-> { \< \sendmessageright{top=\text{$R$}} \< \\ }
   \< \< \uncover<5-> { c \random \mathbb{Z}_q  \\ }
@@ -175,9 +203,10 @@ inner sep=2ex,
   \frametitle{Non-Interactive Schnorr via Fiat-Shamir}
 
   \begin{itemize}
-    \item<1-> The Fiat-Shamir transform allows the interactive challenge step to instead be replaced by the output from a random oracle. 
+	  \item<1-> Fiat-Shamir allows a public-coin interactive proof system to be made non-interactive, 
+	    by generating the challenge instead via a random oracle.
     \item[]
-    \item<2-> For Schnorr signatures, this challenge is also strongly bound to the message that the signature is over. 
+    \item<2-> For Schnorr signatures, the challenge is also bound to the message. 
   \end{itemize}
 \end{frame}
 
@@ -204,10 +233,10 @@ inner sep=2ex,
 
 
 \begin{frame}
-  \frametitle{ECDSA}
+  \frametitle{(EC)-DSA}
 
   \begin{itemize}
-    \item<1-> Designed by Dan Bernstein to allow for a discrete-logarithm signature without infringing on the Schnorr patent. 
+    \item<1-> The Digital Signature Algorithm (DSA) was designed in part to avoid the patent by Schnorr while providing a signature scheme that reduced to discrete logarithm assumptions. 
     \item[]
   \end{itemize}
 \end{frame}
