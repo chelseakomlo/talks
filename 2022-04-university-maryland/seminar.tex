@@ -133,7 +133,7 @@ inner sep=2ex,
   \begin{itemize}
     \item<1-> Ph.D Candidate at the University of Waterloo, part-time at the Zcash Foundation. 
     \item[]
-    \item<1-> My work is largely on multi-party schemes.  
+    \item<1-> My work is largely focused on multi-party zero knowledge proofs of knowledge. 
   \end{itemize}
 \end{frame}
 
@@ -143,7 +143,7 @@ inner sep=2ex,
   \begin{itemize}
     \item<1-> Review of single-party signatures.
     \item[]
-    \item<2-> Review of threshold signatures. 
+    \item<2-> Introduction and review of threshold signatures. 
     \item[]
     \item<3-> How well do these schemes map to a threshold or multisignature setting? 
   \end{itemize}
@@ -158,14 +158,13 @@ inner sep=2ex,
   \frametitle{Sigma Protocol}
 
   \begin{itemize}
-    \item<1-> Recall that a sigma proof of knowledge is a three-move protocol, where:
-  \begin{enumerate}
-	  \item<2->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
-	  \item<3->[2.] The prover begins by \emph{committing} to a random nonce $r$. 
-	  \item<4->[3.] The challenger then \emph{sends} a challenge $c$. 
-	  \item<5->[4.] Using $r$ and $c$, the prover then \emph{outputs} a response $z$. 
-	  \item<6->[5.] Using $(r, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
-  \end{enumerate}
+    \item<1-> A sigma proof of knowledge is a three-move protocol, where:
+    \item[]
+    \item<2->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
+    \item<3->[2.] The prover begins by \emph{committing} to a random nonce $r$. 
+    \item<4->[3.] The challenger then \emph{sends} a challenge $c$. 
+    \item<5->[4.] Using $r$ and $c$, the prover then \emph{outputs} a response $z$. 
+    \item<6->[5.] Using $(r, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
   \end{itemize}
 \end{frame}
 
@@ -233,11 +232,16 @@ inner sep=2ex,
 
 
 \begin{frame}
-  \frametitle{(EC)-DSA}
+  \frametitle{DSA}
 
   \begin{itemize}
-    \item<1-> The Digital Signature Algorithm (DSA) was designed in part to avoid the patent by Schnorr while providing a signature scheme that reduced to discrete logarithm assumptions. 
+    \item<1-> The Digital Signature Algorithm (DSA) is a variant on the Schnorr and ElGamal signature schemes. 
     \item[]
+    \item<2-> Designed in part to avoid the patent by Schnorr while providing a signature scheme that reduced to discrete logarithm assumptions. 
+    \item[]
+    \item<3-> Adopted by NIST in 1994. 
+    \item[]
+    \item<4-> ECDSA is tailored specifically for elliptic curve groups. 
   \end{itemize}
 \end{frame}
 
@@ -251,8 +255,8 @@ inner sep=2ex,
   \uncover<2-> { \< \sendmessageleft{top=\text{$m$}} \< \\ }
   \uncover<3-> { k \random \mathbb{Z}_q;\ R \gets g^k \in \mathbb{G}  \\ }
   \uncover<4-> { c \gets H(m) \\ }
-  \uncover<5-> { z \gets k(c + \sk \cdot r ) \\ }
-  \uncover<6-> { r \gets R.x \text{\algcom Derive the $x$-coordinate} \\ }
+  \uncover<5-> { r \gets R.x \text{\algcom Derive the $x$-coordinate} \\ }
+  \uncover<6-> { z \gets k(c + \sk \cdot r ) \\ }
   %
   \uncover<7-> { \< \sendmessageright{top=\text{$(m, \sigma=(r, z))$}} \< \\ }
   \< \< \uncover<8-> { c \gets H(m) \\ }
@@ -268,7 +272,7 @@ inner sep=2ex,
   \frametitle{EdDSA}
 
   \begin{itemize}
-    \item<1-> Similar to single-party Schnorr, but with two tweaks. 
+    \item<1-> Similar to single-party Schnorr, but with two distinctions. 
     \item[]
     \item<2-> First, the challenge additionally hashes in the public key to prevent malleability. 
     \item[]
@@ -348,13 +352,26 @@ inner sep=2ex,
 
 \end{frame}
 
+\begin{frame}
+  \huge 
+  EdDSA Threshold Signatures
+\end{frame}
 
 \begin{frame}
-  \frametitle{Schnorr/EdDSA: FROST}
+  \frametitle{Thresholdizing Schnorr Signatures: A Trivial Approach}
 
   \begin{itemize}
-    \item<1-> Two-round threshold signing protocol, or single-round \\ protocol with
-    preprocessing
+    \item<1-> A  
+    \item[]
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{1.5-Round FROST}
+
+  \begin{itemize}
+    \item<1-> Two-round threshold signing protocol, or single-round with preprocessing.
     \item[]
     \item<2-> Signing operations are secure when performed concurrently,
       improving upon prior similar schemes.
@@ -362,7 +379,7 @@ inner sep=2ex,
     \item<3-> Signing can be performed with a threshold $t$ number of signers,
       where $t$ can be less than the number of possible signers $n$.
     \item[]
-    \item<4-> Secure against an adversary that controls up to $t-1$ signers.
+    \item<4-> Secure against an adversary that controls up to $t-1$ signers, in OMDL/ROM.
   \end{itemize}
 \end{frame}
 
@@ -377,7 +394,7 @@ inner sep=2ex,
       participant acting as a dealer
     \item[]
     \item<3> After KeyGen, each participant holds secret share $s_i$ and
-      public key $Y_i$ (used for verification during signing) with joint public key $Y$.
+      public key $\pk_i$ (used for verification during signing) with joint public key $\pk$.
   \end{itemize}
 
 \end{frame}
@@ -396,19 +413,6 @@ inner sep=2ex,
 
 
 
-\begin{frame}
-  \centering
-\scalebox{1.0} {
-\procedure{FROST Preprocess}{
-  \textbf{Participant i}  \< \< \textbf{Commitment Server} \\
-    \uncover<1-> { ((d_{ij}, e_{ij}), \dots) \random \mathbb{Z}_q^* \times \mathbb{Z}_q^* \\ }
-    \uncover<2-> { (D_{ij}, E_{ij}) = (g^{d_{ij}}, g^{e_{ij}}) \\ }
-    \uncover<3-> { \text{Store } ((d_{ij}, D_{ij}), (e_{ij}, E_{ij}), \dots) \\ }
-    \uncover<4-> { \< \sendmessageright{top=\text{$((D_{ij}, E_{ij}), \dots)$}} \< \\ }
-    \uncover<5-> { \< \< \text{Store } ((D_{ij}, E_{ij}), \dots) \\ }
-}
-}
-\end{frame}
 
 \begin{frame}
   \centering
@@ -417,43 +421,53 @@ inner sep=2ex,
 \scalebox{0.9} {
 \procedure{FROST Sign}{
   \textbf{Signer i}  \< \textbf{Signature Aggregator} \\
-  \uncover<1-> {\< B=((1, D_1, E_1), \dots, (t, D_t, E_t)) \\}
-  \uncover<2-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
-  \uncover<3-> { \rho_\ell = H_1(\ell, m, B), \ell \in S \\ }
-  \uncover<4-> { R = \prod_{\ell \in S} D_\ell  \cdot ({E_\ell})^{\rho_\ell} \\ }
-  \uncover<5-> { c = H_2(R, Y, m) \\ }
-  \uncover<6-> { z_i = d_i + (e_i \cdot \rho_i) + \lambda_i \cdot s_i \cdot c \\ }
-  \uncover<8-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
-  \uncover<9-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
+  \uncover<1-> { (d_i, e_i) \random \mathbb{Z}_q^* \times \mathbb{Z}_q^* \\ }
+  \uncover<2-> { \> \sendmessageright{top=\text{$(D_i, E_i)$}} \< \\ }
+  \uncover<3-> { \< B=((1, D_1, E_1), \dots, (t, D_t, E_t)) \\}
+  \uncover<4-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
+  \uncover<5-> { \rho_\ell = H_1(\ell, m, B), \ell \in S \\ }
+  \uncover<7-> { R = \prod_{\ell \in S} D_\ell  \cdot ({E_\ell})^{\rho_\ell} \\ }
+  \uncover<8-> { c = H_2(R, \pk, m) \\ }
+  \uncover<9-> { z_i = d_i + (e_i \cdot \rho_i) + \lambda_i \cdot s_i \cdot c \\ }
+  \uncover<11-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
+  \uncover<12-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
 }
 }
 };
-\node<3> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-  absolute pointer = {(-6.2,0.2)}] at (-1,-1) { ``binding value'' to bind signing shares to $\ell$, $m$, and $B$ };
-\node<7> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-  absolute pointer = {(-4.25,-1.5)}] at (1,1) { This step cannot be inverted by
-  anyone who does not know $(d_i, e_i)$.};
-  \node<7>[rectangle, draw=red, line width = 1.5pt,
-  minimum width = 2cm, minimum height =.65cm] at (-5,-1.85) {};
+\node<6> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(-5.9,-0.5)}] at (-1,-1) { ``binding value'' to bind signing shares to $\ell$, $m$, and $B$ };
 \node<10> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-  absolute pointer = {(3.2,-3.2)}] at (1,1) { Signature format and
+  absolute pointer = {(-4.25,-2.5)}] at (1,1) { This step cannot be inverted by
+  anyone who does not know $(d_i, e_i)$.};
+  \node<10>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-5,-2.4) {};
+\node<13> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(3.2,-3)}] at (1,1) { Signature format and
   verification are identical to single-party Schnorr.};
 \end{tikzpicture}
 \end{frame}
 
 
 
+\begin{frame}
+  \huge 
+  ECDSA Threshold Signatures
+\end{frame}
 
 
+\begin{frame}
+  \frametitle{GG18: Overview}
 
-
-
-
-
-
-
-
-
+  \begin{itemize}
+    \item<1-> "Fast Multiparty ECDSA with Fast Trustless Setup" by Gennaro and Goldfeder. 
+    \item[]
+    \item<2-> Employs an additively homomorphic encryption scheme to perform inversion in a multi-party setting. 
+    \item[]
+    \item<3-> Prior work used Pallier's as this encryption scheme, but GG18 uses a SPDZ (used for generic MPC) approach. 
+    \item[]
+    \item<4-> Seven rounds of broadcast, as well as two single-round pairwise multiplicative-to-additive share conversion steps. 
+  \end{itemize}
+\end{frame}
 
 
 
@@ -468,7 +482,11 @@ inner sep=2ex,
   \frametitle{Takeaways}
 
   \begin{itemize}
-    \item TODO 
+    \item Schnorr signatures are linear functions and so are simpler to thresholdize, but ROS attacks are viable.  
+    \item[]
+    \item ECDSA signatures are harder to thresholdize due to the requirement of performing multiplicative MPC. 
+    \item[]
+    \item In general, patents in cryptography lead to hacks!
   \end{itemize}
 \end{frame}
 
