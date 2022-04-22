@@ -161,10 +161,10 @@ inner sep=2ex,
     \item<1-> A sigma proof of knowledge is a three-move protocol, where:
     \item[]
     \item<2->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
-    \item<3->[2.] The prover begins by \emph{committing} to a random nonce $r$. 
+    \item<3->[2.] The prover begins by issuing a \emph{commitment} $R$ to a nonce $r$.
     \item<4->[3.] The challenger then \emph{sends} a challenge $c$. 
     \item<5->[4.] Using $r$ and $c$, the prover then \emph{outputs} a response $z$. 
-    \item<6->[5.] Using $(r, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
+    \item<6->[5.] Using $(R, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
   \end{itemize}
 \end{frame}
 
@@ -175,12 +175,12 @@ inner sep=2ex,
 \procedure{Schnorr Identification Protocol: Prove Knowledge of $\sk$}{
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
-  \uncover<2-> { k \random \mathbb{Z}_q } \\
-  \uncover<3-> { R \gets g^k \in \mathbb{G} } \\
+  \uncover<2-> { r \random \mathbb{Z}_q } \\
+  \uncover<3-> { R \gets g^r \in \mathbb{G} } \\
   \uncover<4-> { \< \sendmessageright{top=\text{$R$}} \< \\ }
   \< \< \uncover<5-> { c \random \mathbb{Z}_q  \\ }
   \uncover<6-> { \< \sendmessageleft{top=\text{$c$}} \< \\ }
-  \uncover<7-> { z \gets k + c \cdot \sk \\ }
+  \uncover<7-> { z \gets r + c \cdot \sk \\ }
   \uncover<8-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
   \< \< \uncover<9-> { R' = g^z \cdot \pk^{-c'} \\ }
   \< \< \uncover<10-> { \text{Output } 1 \text{ if } R \stackrel{?}{=} R' \\ }
@@ -208,10 +208,10 @@ inner sep=2ex,
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
   \uncover<2-> { \< \sendmessageleft{top=\text{$m$}} \< \\ }
-  \uncover<3-> { k \random \mathbb{Z}_q} \\
-  \uncover<4-> { R \gets g^k } \\
+  \uncover<3-> { r \random \mathbb{Z}_q} \\
+  \uncover<4-> { R \gets g^r } \\
   \uncover<5-> { c \gets H(R, m) \\ }
-  \uncover<6-> { z \gets k + c \cdot \sk \\ }
+  \uncover<6-> { z \gets r + c \cdot \sk \\ }
   \uncover<7-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
   \< \< \uncover<8-> { c \gets H(R, m) \\ }
   \< \< \uncover<9-> { R' \gets g^z \cdot \pk^{-c} \\ }
@@ -276,10 +276,10 @@ inner sep=2ex,
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
   \uncover<2-> { \< \sendmessageleft{top=\text{$m$}} \< \\ }
-  \uncover<3-> { k \gets H(\sk, m) \text{\algcom Deterministic nonce generation} } \\
-  \uncover<4-> { R = g^k } \\
+  \uncover<3-> { r \gets H(\sk, m) \text{\algcom Deterministic nonce generation} } \\
+  \uncover<4-> { R = g^r } \\
   \uncover<5-> { c = H(R, \pk, m) \\ }
-  \uncover<6-> { z = k + c \cdot \sk \\ }
+  \uncover<6-> { z = r + c \cdot \sk \\ }
   \uncover<7-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
   \< \< \uncover<8-> { c = H(R, \pk, m) \\ }
   \< \< \uncover<9-> { R' = g^z \cdot \pk^{-c} \\ }
@@ -371,6 +371,26 @@ inner sep=2ex,
 \node<10>[rectangle, draw=red, line width = 1.5pt,
   minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
 \end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{ROS Attack}
+
+  \begin{itemize}
+    \item<1-> \underline{R}andom inhomogeneities in a \underline{O}verdetermined \underline{S} olvable system of linear equations
+    \item[]
+    \item<2-> Birthday paradox: Among a set of $\sqrt{p}$ random elements from a set of size $p$, two elements will collide with high probability. 
+    \item[]
+    \item<3-> "On the (in)security of ROS": Benhamouda et al. showed that ROS attacks can be performed in polynomial time. 
+    \item[]
+    \item<3-> A forgery for the trivial construction can be produced using this ROS solver, by finding 
+  \end{itemize}
+	\[ c^*= H(R^*, Y, m^*) \uncover<2->{ = \sum_{j=1}^{k} H(R_{ij}, Y, m_j)  =
+	\sum c_j  \text{ for some } (R_{ij}, m_j), \dots }, \text{such that} \]
+
+	\[ \uncover<4-> {z_i^* = \sum r_{ij} + \lambda_i \cdot \sk_i \cdot \sum c_j} = \uncover<5->
+	{ \sum r_{ij} + \lambda_i \cdot \sk_i \cdot c^*} \]
 \end{frame}
 
 
