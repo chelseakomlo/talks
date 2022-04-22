@@ -394,10 +394,12 @@ inner sep=2ex,
   \begin{itemize}
     \item<1-> A forgery for the trivial construction can be produced using this ROS solver, by finding 
   \end{itemize}
-	\[ \uncover<2> { c^*= H(R^*, Y, m^*) \uncover<2->{ = \sum_{j=1}^{k} H(R_{ij}, Y, m_j)  =
-	\sum c_j  \text{ for some } (R_{ij}, m_j), \dots }, \text{such that} } \]
+	\[ \uncover<2-> { c^*= H(R^*, Y, m^*) \uncover<2->{ = \sum_{j=1}^{k} H(R_{ij}, Y, m_j)  =
+	\sum c_j  \text{ for some } (R_{ij}, m_j), \dots } } \]
 
-	\[ \uncover<3-> {z_i^* = \sum r_{ij} + \lambda_i \cdot \sk_i \cdot \sum c_j} = \uncover<5->
+	Such that
+
+	\[ \uncover<3-> {z_i^* = \sum r_{ij} + \lambda_i \cdot \sk_i \cdot \sum c_j} = \uncover<4->
 	{ \sum r_{ij} + \lambda_i \cdot \sk_i \cdot c^*} \]
 \end{frame}
 
