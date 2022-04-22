@@ -168,20 +168,11 @@ inner sep=2ex,
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Schnorr Signatures}
-
-  \begin{itemize}
-    \item<1-> Simply a sigma proof of knowledge of $\sk$, where $\pk = g^\sk$. 
-    \item[]
-    \item<2-> Made non-interactive and bound to a message $m$ via Fiat-Shamir. 
-  \end{itemize}
-\end{frame}
 
 \begin{frame}
   \centering
 \scalebox{0.9} {
-\procedure{Schnorr Identification Protocol}{
+\procedure{Schnorr Identification Protocol: Prove Knowledge of $\sk$}{
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
   \uncover<2-> { k \random \mathbb{Z}_q } \\
@@ -237,11 +228,9 @@ inner sep=2ex,
   \begin{itemize}
     \item<1-> The Digital Signature Algorithm (DSA) is a variant on the Schnorr and ElGamal signature schemes. 
     \item[]
-    \item<2-> Designed in part to avoid the patent by Schnorr while providing a signature scheme that reduced to discrete logarithm assumptions. 
+    \item<2-> Adopted by NIST in 1994. 
     \item[]
-    \item<3-> Adopted by NIST in 1994. 
-    \item[]
-    \item<4-> ECDSA is tailored specifically for elliptic curve groups. 
+    \item<3-> ECDSA is tailored specifically for elliptic curve groups. 
   \end{itemize}
 \end{frame}
 
@@ -357,13 +346,31 @@ inner sep=2ex,
   EdDSA Threshold Signatures
 \end{frame}
 
-\begin{frame}
-  \frametitle{Thresholdizing Schnorr Signatures: A Trivial Approach}
 
-  \begin{itemize}
-    \item<1-> A  
-    \item[]
-  \end{itemize}
+\begin{frame}
+  \centering
+\begin{tikzpicture}
+\node at (0,0) {
+\scalebox{0.9} {
+  \procedure{A Trivial (and Broken!) EdDSA Threshold Signature}{
+  \textbf{Signer i}  \< \textbf{Signature Aggregator} \\
+  \uncover<1-> { r_i \random \mathbb{Z}_q^* \\ }
+  \uncover<2-> { \> \sendmessageright{top=\text{$R_i$}} \< \\ }
+  \uncover<3-> { \< B=((1, R_1), \dots, (t, R_t)) \\}
+  \uncover<4-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
+  \uncover<5-> { R = \prod_{\ell \in S} R_\ell   \\ }
+  \uncover<6-> { c = H_1(R, \pk, m) \\ }
+  \uncover<7-> { z_i = r_i + \lambda_i \cdot s_i \cdot c \\ }
+  \uncover<8-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
+  \uncover<9-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
+}
+}
+};
+\node<10> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(-2.8,-2.3)}] at (1,1) { This structure allows for ROS-style attacks.};
+\node<10>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
+\end{tikzpicture}
 \end{frame}
 
 
