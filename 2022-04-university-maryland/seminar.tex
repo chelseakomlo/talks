@@ -237,6 +237,8 @@ inner sep=2ex,
 \begin{frame}
   \centering
   \small
+\begin{tikzpicture}
+\node at (0,0) {
 \scalebox{0.9} {
 \procedure{ECDSA }{
   \textbf{Signer}  \< \< \textbf{Verifier} \\
@@ -245,16 +247,23 @@ inner sep=2ex,
   \uncover<3-> { k \random \mathbb{Z}_q;\ R \gets g^k \in \mathbb{G}  \\ }
   \uncover<4-> { c \gets H(m) \\ }
   \uncover<5-> { r \gets R.x \text{\algcom Derive the $x$-coordinate} \\ }
-  \uncover<6-> { z \gets k(c + \sk \cdot r ) \\ }
+  \uncover<6-> { z \gets k \cdot c + r \cdot k \cdot \sk ) \\ }
   %
-  \uncover<7-> { \< \sendmessageright{top=\text{$(m, \sigma=(r, z))$}} \< \\ }
-  \< \< \uncover<8-> { c \gets H(m) \\ }
-  \< \< \uncover<9-> { u_1 \gets c \cdot z^{-1};\ u_2 \gets r \cdot z^{-1} \\ }
-  \< \< \uncover<10-> { R' \gets g^{u_1} \cdot \pk^{u_2} \\ }
-  \< \< \uncover<11-> { \text{Output } 1 \text{ if } r \stackrel{?}{=} R'.x;\ \text{ otherwise } 0 \\ }
+  \uncover<8-> { \< \sendmessageright{top=\text{$(m, \sigma=(r, z))$}} \< \\ }
+  \< \< \uncover<9-> { c \gets H(m) \\ }
+  \< \< \uncover<10-> { u_1 \gets c \cdot z^{-1};\ u_2 \gets r \cdot z^{-1} \\ }
+  \< \< \uncover<11-> { R' \gets g^{u_1} \cdot \pk^{u_2} \\ }
+  \< \< \uncover<12-> { \text{Output } 1 \text{ if } r \stackrel{?}{=} R'.x;\ \text{ otherwise } 0 \\ }
 }
 }
+};
+\node<7> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party setting, where no single party knows $k$ or $\sk$.};
+\node<7>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-4.7,-0.2) {};
+\end{tikzpicture}
 \end{frame}
+
 
 
 \begin{frame}
@@ -339,6 +348,26 @@ inner sep=2ex,
 
 \end{tikzpicture}
 
+\end{frame}
+
+\begin{frame}
+  \huge 
+  ECDSA Threshold Signatures
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{GG18: Overview}
+
+  \begin{itemize}
+    \item<1-> "Fast Multiparty ECDSA with Fast Trustless Setup" by Gennaro and Goldfeder. 
+    \item[]
+    \item<2-> Employs an additively homomorphic encryption scheme to perform $r \cdot (\sum k_i  \cdot \sum \sk_i) $ in a multi-party setting. 
+    \item[]
+    \item<3-> Prior work used Pallier's as this encryption scheme, but GG18 uses SPDZ (used for generic MPC). 
+    \item[]
+    \item<4-> Seven rounds of broadcast, as well as two single-round pairwise multiplicative-to-additive share conversion steps. 
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -495,25 +524,6 @@ absolute pointer = {(-2.8,-2.3)}] at (1,1) { $s = \sum s_i \lambda_i$, for $i \i
 
 
 
-\begin{frame}
-  \huge 
-  ECDSA Threshold Signatures
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{GG18: Overview}
-
-  \begin{itemize}
-    \item<1-> "Fast Multiparty ECDSA with Fast Trustless Setup" by Gennaro and Goldfeder. 
-    \item[]
-    \item<2-> Employs an additively homomorphic encryption scheme to perform inversion in a multi-party setting. 
-    \item[]
-    \item<3-> Prior work used Pallier's as this encryption scheme, but GG18 uses a SPDZ (used for generic MPC) approach. 
-    \item[]
-    \item<4-> Seven rounds of broadcast, as well as two single-round pairwise multiplicative-to-additive share conversion steps. 
-  \end{itemize}
-\end{frame}
 
 
 
