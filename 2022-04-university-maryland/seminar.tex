@@ -141,9 +141,9 @@ inner sep=2ex,
   \frametitle{Overview}
 
   \begin{itemize}
-    \item<1-> Review of single-party signatures.
+    \item<1-> Review of single-party discrete-log based signatures.
     \item[]
-    \item<2-> Introduction and review of threshold signatures. 
+    \item<2-> Introduction to threshold signatures. 
     \item[]
     \item<3-> How well do these schemes map to a threshold or multisignature setting? 
   \end{itemize}
@@ -161,10 +161,10 @@ inner sep=2ex,
     \item<1-> A sigma proof of knowledge is a three-move protocol, where:
     \item[]
     \item<2->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
-    \item<3->[2.] The prover begins by issuing a \emph{commitment} $R$ to a nonce $r$.
-    \item<4->[3.] The challenger then \emph{sends} a challenge $c$. 
-    \item<5->[4.] Using $r$ and $c$, the prover then \emph{outputs} a response $z$. 
-    \item<6->[5.] Using $(R, c,z, \pk)$, the challenger can finally verify that the prover indeed knows $\sk$ corresponding to $\pk$.
+    \item<3->[2.] The prover begins by issuing a \emph{commitment} to a witness.
+    \item<4->[3.] The challenger then \emph{sends} a challenge. 
+    \item<5->[4.] The prover then \emph{outputs} a response. 
+    \item<6->[5.] The challenger then verifies that the prover indeed knows $\sk$ corresponding to $\pk$.
   \end{itemize}
 \end{frame}
 
@@ -361,14 +361,24 @@ inner sep=2ex,
   \uncover<5-> { R = \prod_{\ell \in S} R_\ell   \\ }
   \uncover<6-> { c = H_1(R, \pk, m) \\ }
   \uncover<7-> { z_i = r_i + \lambda_i \cdot s_i \cdot c \\ }
-  \uncover<8-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
-  \uncover<9-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
+  \uncover<10-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
+  \uncover<11-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
 }
 }
 };
-\node<10> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-  absolute pointer = {(-2.8,-2.3)}] at (1,1) { This structure allows for ROS-style attacks.};
-\node<10>[rectangle, draw=red, line width = 1.5pt,
+\node<8> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+absolute pointer = {(-2.8,-2.3)}] at (1,1) { Each $s_i$ is a Shamir secret share $(i, s_i)$ of a secret s.};
+\node<8>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
+%
+\node<9> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+absolute pointer = {(-2.8,-2.3)}] at (1,1) { $s = \sum s_i \lambda_i$, for $i \in S$ \\ $ S \in \{1, \ldots n \}, \lvert S \rvert \geq t$.};
+\node<9>[rectangle, draw=red, line width = 1.5pt,
+  minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
+%
+\node<12> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
+  absolute pointer = {(-2.8,-2.3)}] at (1,1) { This structure allows for ROS-style attacks!};
+\node<12>[rectangle, draw=red, line width = 1.5pt,
   minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
 \end{tikzpicture}
 \end{frame}
@@ -378,12 +388,12 @@ inner sep=2ex,
   \frametitle{ROS Attack}
 
   \begin{itemize}
-    \item<1-> \underline{R}andom inhomogeneities in a \underline{O}verdetermined \underline{S}olvable system of linear equations
-    \item<2-> Birthday paradox: Among a set of $\sqrt{p}$ random elements from a set of size $p$, two elements will collide with high probability. 
-    \item<4-> However, given a random oracle $H\ : \{0,1 \}^n \rightarrow \Zq$, the \textbf{ROS problem} asks to find a set $\langle c_1, \ldots, c_\ell \rangle$  and $c^*$ such that 
+    \item<1-> Birthday paradox: Among a set of $\sqrt{p}$ random elements from a set of size $p$, two elements will collide with high probability. 
+    \item<2-> However, given a random oracle $H\ : \{0,1 \}^n \rightarrow \Zq$, the \textbf{ROS problem} asks to find a set $\langle c_1, \ldots, c_\ell \rangle$  and $c^*$ such that 
 	    \[  \sum_{i=1}^\ell c_i = c^*  \]
 
-    \item<3-> "On the (in)security of ROS": Benhamouda et al. showed that the ROS problem can be solved in polynomial time. 
+    \item<3-> \underline{R}andom inhomogeneities in a \underline{O}verdetermined \underline{S}olvable system of linear equations
+    \item<4-> "On the (in)security of ROS": Benhamouda et al. showed that the ROS problem can be solved in polynomial time. 
   \end{itemize}
 \end{frame}
 
@@ -397,7 +407,7 @@ inner sep=2ex,
 	\[ \uncover<2-> { c^*= H(R^*, Y, m^*) \uncover<2->{ = \sum_{j=1}^{k} H(R_{ij}, Y, m_j)  =
 	\sum c_j  \text{ for some } (R_{ij}, m_j), \dots } } \]
 
-	Such that
+	\uncover<3-> { Such that}
 
 	\[ \uncover<3-> {z_i^* = \sum r_{ij} + \lambda_i \cdot \sk_i \cdot \sum c_j} = \uncover<4->
 	{ \sum r_{ij} + \lambda_i \cdot \sk_i \cdot c^*} \]
