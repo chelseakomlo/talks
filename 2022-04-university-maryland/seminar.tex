@@ -102,7 +102,7 @@
 
 
 
-\title[Signatures for Discrete Logarithm Based Cryptosystems]{Single and Multi-Party Signatures for Discrete-Log Based Cryptosystems}
+\title[Signatures for Discrete Logarithm Based Cryptosystems]{Multi-Party Signatures for \\ Discrete-Log Based Cryptosystems}
 %"ECDSA,EDDSA, and Schnor: why they differ, and why threshold signatures are sometimes hard."
 \author{Chelsea Komlo, University of Waterloo}
 \date[April 2022]{ University of Maryland, April 28, 2022}
@@ -172,7 +172,7 @@ inner sep=2ex,
 \begin{frame}
   \centering
 \scalebox{0.9} {
-\procedure{Schnorr Identification Protocol: Prove Knowledge of $\sk$}{
+\procedure{Identification Protocol: Prove Knowledge of $\sk$}{
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
   \uncover<2-> { r \random \mathbb{Z}_q } \\
@@ -181,7 +181,7 @@ inner sep=2ex,
   \< \< \uncover<5-> { c \random \mathbb{Z}_q  \\ }
   \uncover<6-> { \< \sendmessageleft{top=\text{$c$}} \< \\ }
   \uncover<7-> { z \gets r + c \cdot \sk \\ }
-  \uncover<8-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
+  \uncover<8-> { \< \sendmessageright{top=\text{$z$}} \< \\ }
   \< \< \uncover<9-> { R' = g^z \cdot \pk^{-c'} \\ }
   \< \< \uncover<10-> { \text{Output } 1 \text{ if } R \stackrel{?}{=} R' \\ }
   \< \< \uncover<11-> { \text{Otherwise, output } 0 \\ }
@@ -226,7 +226,9 @@ inner sep=2ex,
   \frametitle{DSA}
 
   \begin{itemize}
-    \item<1-> The Digital Signature Algorithm (DSA) is a variant on the Schnorr and ElGamal signature schemes. 
+    \item<1-> Schnorr was patented until 2008.  
+    \item[]
+    \item<1-> The Digital Signature Algorithm (DSA) is a variant on the Schnorr and ElGamal signature schemes, but was not patented. 
     \item[]
     \item<2-> Adopted by NIST in 1994. 
     \item[]
@@ -304,6 +306,22 @@ absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party 
   Threshold Signatures
 \end{frame}
 
+\begin{frame}
+  \frametitle{Shamir Secret Sharing}
+
+  \begin{itemize}
+    \item<1-> Allows a \emph{dealer} to share a secret $\secretone$ among $n$ participants, where $t$ participants must cooperate to recover $\secretone$.
+    \item<2-> $f$ is the polynomial defined by the coefficients
+
+      \[f = \secretone + a_1 x + a_2 x^2 + a_3 x^3 + \ldots + a_{t-1}x^{t-1}  \]
+
+    \item<3-> Each participant $i \in \{1, \ldots, n \}$ receives a share $\shareone_i \gets f(i) $.
+    \item<4-> Recall that $t$ points uniquely define a polynomial of degree $t-1$!
+    \item<5-> By polynomial interpolation, $\secretone = f(0) = \sum_{i=1}^t f(i) \lambda_i$.
+    \item<6-> $\lambda_i$ is $L_i(0)$, where $L_i$ is the $i\supth$ Lagrange polynomial for the set $\{1, \ldots, t \}$.
+  \end{itemize}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Threshold Signatures: Joint Public \\ Key, Secret-Shared Private Key}
@@ -351,6 +369,19 @@ absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party 
 \end{frame}
 
 \begin{frame}
+  \frametitle{Goals for Threshold Signatures }
+
+  \begin{itemize}
+    \item<1-> Compatibile with single-party signing 
+    \item[]
+    \item<2-> Low round efficiency 
+    \item[]
+    \item<3-> Batching  
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
   \huge 
   ECDSA Threshold Signatures
 \end{frame}
@@ -389,24 +420,24 @@ absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party 
   \uncover<4-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
   \uncover<5-> { R = \prod_{\ell \in S} R_\ell   \\ }
   \uncover<6-> { c = H_1(R, \pk, m) \\ }
-  \uncover<7-> { z_i = r_i + \lambda_i \cdot s_i \cdot c \\ }
+  \uncover<7-> { z_i = r_i + \lambda_i \cdot \sk_i \cdot c \\ }
   \uncover<10-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
   \uncover<11-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
 }
 }
 };
 \node<8> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-absolute pointer = {(-2.8,-2.3)}] at (1,1) { Each $s_i$ is a Shamir secret share $(i, s_i)$ of a secret s.};
+absolute pointer = {(-2.8,-2.3)}] at (0,1) { Each $\sk_i$ is a Shamir secret share $(i, \sk_i)$ of a secret $\sk$.};
 \node<8>[rectangle, draw=red, line width = 1.5pt,
   minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
 %
 \node<9> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-absolute pointer = {(-2.8,-2.3)}] at (1,1) { $s = \sum s_i \lambda_i$, for $i \in S$ \\ $ S \in \{1, \ldots n \}, \lvert S \rvert \geq t$.};
+absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $i \in S$ \\ $ S \in \{1, \ldots n \}, \lvert S \rvert \geq t$.};
 \node<9>[rectangle, draw=red, line width = 1.5pt,
   minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
 %
 \node<12> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-  absolute pointer = {(-2.8,-2.3)}] at (1,1) { This structure allows for ROS-style attacks!};
+  absolute pointer = {(-2.8,-2.3)}] at (0,1) { This structure allows for ROS-style attacks!};
 \node<12>[rectangle, draw=red, line width = 1.5pt,
   minimum width = 2cm, minimum height =.65cm] at (-3.3,-2.2) {};
 \end{tikzpicture}
@@ -418,8 +449,8 @@ absolute pointer = {(-2.8,-2.3)}] at (1,1) { $s = \sum s_i \lambda_i$, for $i \i
 
   \begin{itemize}
     \item<1-> Birthday paradox: Among a set of $\sqrt{p}$ random elements from a set of size $p$, two elements will collide with high probability. 
-    \item<2-> However, given a random oracle $H\ : \{0,1 \}^n \rightarrow \Zq$, the \textbf{ROS problem} asks to find a set $\langle c_1, \ldots, c_\ell \rangle$  and $c^*$ such that 
-	    \[  \sum_{i=1}^\ell c_i = c^*  \]
+    \item<2-> However, given a random oracle $H\ : \{0,1 \}^n \rightarrow \Zq$, the \textbf{ROS problem} asks to find a set $\langle c_1, \ldots, c_\ell \rangle$, a vector $\gamma_1, \ldots, \gamma_\ell$, and $c^*$ such that 
+	    \[  \gamma_i \sum_{i=1}^\ell c_i = c^*  \]
 
     \item<3-> \underline{R}andom inhomogeneities in a \underline{O}verdetermined \underline{S}olvable system of linear equations
     \item<4-> "On the (in)security of ROS": Benhamouda et al. showed that the ROS problem can be solved in polynomial time. 
@@ -503,7 +534,7 @@ absolute pointer = {(-2.8,-2.3)}] at (1,1) { $s = \sum s_i \lambda_i$, for $i \i
   \uncover<5-> { \rho_\ell = H_1(\ell, m, B), \ell \in S \\ }
   \uncover<7-> { R = \prod_{\ell \in S} D_\ell  \cdot ({E_\ell})^{\rho_\ell} \\ }
   \uncover<8-> { c = H_2(R, \pk, m) \\ }
-  \uncover<9-> { z_i = d_i + (e_i \cdot \rho_i) + \lambda_i \cdot s_i \cdot c \\ }
+  \uncover<9-> { z_i = d_i + (e_i \cdot \rho_i) + \lambda_i \cdot \sk_i \cdot c \\ }
   \uncover<11-> { \> \sendmessageright{top=\text{$z_i$}} \> \\ }
   \uncover<12-> { \> \> \text{Publish } \sigma=(R, z=\sum z_i) }
 }
