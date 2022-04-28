@@ -104,7 +104,7 @@
 
 \title[Signatures for Discrete Logarithm Based Cryptosystems]{Multi-Party Signatures for \\ Discrete-Log Based Cryptosystems}
 %"ECDSA,EDDSA, and Schnor: why they differ, and why threshold signatures are sometimes hard."
-\author{Chelsea Komlo, University of Waterloo}
+\author{Chelsea Komlo, University of Waterloo, Zcash Foundation}
 \date[April 2022]{ University of Maryland, April 28, 2022}
 
 \begin{document}
@@ -160,11 +160,11 @@ inner sep=2ex,
   \begin{itemize}
     \item<1-> A sigma proof of knowledge is a three-move protocol, where:
     \item[]
-    \item<2->[1.] The prover is initialized with $\sk$, and a challenger with $\pk$. 
-    \item<3->[2.] The prover begins by issuing a \emph{commitment} to a witness.
-    \item<4->[3.] The challenger then \emph{sends} a challenge. 
-    \item<5->[4.] The prover then \emph{outputs} a response. 
-    \item<6->[5.] The challenger then verifies that the prover indeed knows $\sk$ corresponding to $\pk$.
+    \item<2->[1.] The prover is initialized with a witness $k$, and a challenger with the statement $K$. 
+    \item<3->[2.] The prover begins by issuing a public \emph{commitment} $R$ to another witness $r$.
+    \item<4->[3.] The challenger then \emph{sends} a challenge $c$. 
+    \item<5->[4.] The prover then \emph{outputs} a response $z$. 
+    \item<6->[5.] The challenger then verifies that the prover indeed knows $k$ corresponding to $K$, using $(R, z, c)$.
   \end{itemize}
 \end{frame}
 
@@ -173,7 +173,7 @@ inner sep=2ex,
   \centering
 \scalebox{0.9} {
 \procedure{Identification Protocol: Prove Knowledge of $\sk$}{
-  \textbf{Signer}  \< \< \textbf{Verifier} \\
+  \textbf{Prover}  \< \< \textbf{Challenger} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
   \uncover<2-> { r \random \mathbb{Z}_q } \\
   \uncover<3-> { R \gets g^r \in \mathbb{G} } \\
@@ -223,16 +223,16 @@ inner sep=2ex,
 
 
 \begin{frame}
-  \frametitle{DSA}
+\frametitle{Digital Signature Algorithm (DSA)}
 
   \begin{itemize}
     \item<1-> Schnorr was patented until 2008.  
     \item[]
-    \item<1-> The Digital Signature Algorithm (DSA) is a variant on the Schnorr and ElGamal signature schemes, but was not patented. 
+    \item<2-> DSA is a variant on the Schnorr and ElGamal signature schemes, but not patented. 
     \item[]
-    \item<2-> Adopted by NIST in 1994. 
+    \item<3-> Adopted by NIST in 1994. 
     \item[]
-    \item<3-> ECDSA is tailored specifically for elliptic curve groups. 
+    \item<4-> ECDSA is tailored specifically for elliptic curve groups. 
   \end{itemize}
 \end{frame}
 
@@ -249,7 +249,7 @@ inner sep=2ex,
   \uncover<3-> { k \random \mathbb{Z}_q;\ R \gets g^k \in \mathbb{G}  \\ }
   \uncover<4-> { c \gets H(m) \\ }
   \uncover<5-> { r \gets R.x \text{\algcom Derive the $x$-coordinate} \\ }
-  \uncover<6-> { z \gets k \cdot c + r \cdot k \cdot \sk ) \\ }
+  \uncover<6-> { z \gets k \cdot c + r \cdot k \cdot \sk  \\ }
   %
   \uncover<8-> { \< \sendmessageright{top=\text{$(m, \sigma=(r, z))$}} \< \\ }
   \< \< \uncover<9-> { c \gets H(m) \\ }
@@ -260,7 +260,7 @@ inner sep=2ex,
 }
 };
 \node<7> [fill=yellow,draw=red,ultra thick, text width=.3\textwidth,anchor=north west,ellipse callout,text centered,callout
-absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party setting, where no single party knows $k$ or $\sk$.};
+absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party \\ setting, where no single party knows $k$ or $\sk$.};
 \node<7>[rectangle, draw=red, line width = 1.5pt,
   minimum width = 2cm, minimum height =.65cm] at (-4.7,-0.2) {};
 \end{tikzpicture}
@@ -287,15 +287,15 @@ absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party 
   \textbf{Signer}  \< \< \textbf{Verifier} \\
   \uncover<1-> { (\sk, \pk) \leftarrow \mathit{KeyGen()} \\ }
   \uncover<2-> { \< \sendmessageleft{top=\text{$m$}} \< \\ }
-  \uncover<3-> { r \gets H(\sk, m) \text{\algcom Deterministic nonce generation} } \\
-  \uncover<4-> { R = g^r } \\
-  \uncover<5-> { c = H(R, \pk, m) \\ }
-  \uncover<6-> { z = r + c \cdot \sk \\ }
-  \uncover<7-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
-  \< \< \uncover<8-> { c = H(R, \pk, m) \\ }
-  \< \< \uncover<9-> { R' = g^z \cdot \pk^{-c} \\ }
-  \< \< \uncover<10-> { \text{Output } 1 \text{ if } R \stackrel{?}{=} R' \\ }
-  \< \< \uncover<10-> { \text{Otherwise, output } 0 \\ }
+  \uncover<3-> { r \gets H(\sk, m)  } \\
+  \uncover<3-> { \text{\algcom Deterministic to mitigate bad randomness} } \\
+  \uncover<4-> { R = g^r ;\ c = H(R, \pk, m) \\ }
+  \uncover<5-> { z = r + c \cdot \sk \\ }
+  \uncover<6-> { \< \sendmessageright{top=\text{$(m, \sigma=(R, z))$}} \< \\ }
+  \< \< \uncover<7-> { c = H(R, \pk, m) \\ }
+  \< \< \uncover<8-> { R' = g^z \cdot \pk^{-c} \\ }
+  \< \< \uncover<9-> { \text{Output } 1 \text{ if } R \stackrel{?}{=} R' \\ }
+  \< \< \uncover<9-> { \text{Otherwise, output } 0 \\ }
 }
 }
 \end{frame}
@@ -414,7 +414,7 @@ absolute pointer = {(-4.3,-0.4)}] at (1,1) { This step is hard in a multi-party 
 \scalebox{0.9} {
   \procedure{A Trivial (and Broken!) EdDSA Threshold Signature}{
   \textbf{Signer i}  \< \textbf{Signature Aggregator} \\
-  \uncover<1-> { r_i \random \mathbb{Z}_q^* \\ }
+  \uncover<1-> { r_i \random \mathbb{Z}_q^*;\ R_i \gets g^{r_i} \\ }
   \uncover<2-> { \> \sendmessageright{top=\text{$R_i$}} \< \\ }
   \uncover<3-> { \< B=((1, R_1), \dots, (t, R_t)) \\}
   \uncover<4-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
@@ -448,11 +448,13 @@ absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $
   \frametitle{ROS Attack}
 
   \begin{itemize}
-    \item<1-> Birthday paradox: Among a set of $\sqrt{p}$ random elements from a set of size $p$, two elements will collide with high probability. 
-    \item<2-> However, given a random oracle $H\ : \{0,1 \}^n \rightarrow \Zq$, the \textbf{ROS problem} asks to find a set $\langle c_1, \ldots, c_\ell \rangle$, a vector $\gamma_1, \ldots, \gamma_\ell$, and $c^*$ such that 
+    \item<1-> \underline{R}andom inhomogeneities in a \underline{O}verdetermined \underline{S}olvable system of linear equations
+    \item<2-> Birthday paradox: Among a set of $\sqrt{p}$ random elements from a set of size $p$, two elements will collide with high probability. 
+    \item<3-> However, given a random oracle $H\ : \{0,1 \}^n \rightarrow \Zq$, 
+	    the \textbf{ROS problem} asks to find a set $\langle c_1, \ldots, c_\ell \rangle$ where $c_i \gets H(\cdot)$, 
+	    a vector $\gamma_1, \ldots, \gamma_\ell \in \Z^\ell$, and $c^*$ such that 
 	    \[  \gamma_i \sum_{i=1}^\ell c_i = c^*  \]
 
-    \item<3-> \underline{R}andom inhomogeneities in a \underline{O}verdetermined \underline{S}olvable system of linear equations
     \item<4-> "On the (in)security of ROS": Benhamouda et al. showed that the ROS problem can be solved in polynomial time. 
   \end{itemize}
 \end{frame}
@@ -464,28 +466,23 @@ absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $
   \begin{itemize}
     \item<1-> A forgery for the trivial construction can be produced using this ROS solver, by finding 
   \end{itemize}
-	\[ \uncover<2-> { c^*= H(R^*, Y, m^*) \uncover<2->{ = \sum_{j=1}^{k} H(R_{ij}, Y, m_j)  =
-	\sum c_j  \text{ for some } (R_{ij}, m_j), \dots } } \]
+	\[ \uncover<2-> { c^*= H(R^*, \pk, m^*) \uncover<2->{ = \sum_{j=1}^{k} H(R_j, \pk`, m_j)  =
+	\sum c_j  \text{ for some } (R_j, m_j), \dots } } \]
 
-	\uncover<3-> { Such that}
+	\uncover<3-> { Allowing for the forgery for participant $i$:}
 
 	\[ \uncover<3-> {z_i^* = \sum r_{ij} + \lambda_i \cdot \sk_i \cdot \sum c_j} = \uncover<4->
 	{ \sum r_{ij} + \lambda_i \cdot \sk_i \cdot c^*} \]
 \end{frame}
 
 \begin{frame}
-  \frametitle{1.5-Round FROST}
+  \frametitle{FROST: Flexible Round-Optimized Schnorr Threshold Signatures}
 
   \begin{itemize}
+    \item[]
     \item<1-> Two-round threshold signing protocol, or single-round with preprocessing.
     \item[]
-    \item<2-> Signing operations are secure when performed concurrently,
-      improving upon prior similar schemes.
-    \item[]
-    \item<3-> Signing can be performed with a threshold $t$ number of signers,
-      where $t$ can be less than the number of possible signers $n$.
-    \item[]
-    \item<4-> Secure against an adversary that controls up to $t-1$ signers, in OMDL/ROM.
+    \item<2-> Secure against an adversary that controls up to $t-1$ signers, in OMDL/ROM.
   \end{itemize}
 \end{frame}
 
@@ -502,17 +499,13 @@ absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $
     \item<3> After KeyGen, each participant holds secret share $s_i$ and
       public key $\pk_i$ (used for verification during signing) with joint public key $\pk$.
   \end{itemize}
-
 \end{frame}
 
 \begin{frame}
   \frametitle{FROST Sign}
 
   \begin{itemize}
-    \item<1-> Can be performed in two rounds, or optimized to single round with
-      preprocessing
-    \item[]
-    \item<2-> We show here with a signature aggregator, but can be
+    \item<1-> We show here with a signature aggregator, but can be
       performed without centralized roles
   \end{itemize}
 \end{frame}
@@ -528,7 +521,7 @@ absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $
 \procedure{FROST Sign}{
   \textbf{Signer i}  \< \textbf{Signature Aggregator} \\
   \uncover<1-> { (d_i, e_i) \random \mathbb{Z}_q^* \times \mathbb{Z}_q^* \\ }
-  \uncover<2-> { \> \sendmessageright{top=\text{$(D_i, E_i)$}} \< \\ }
+  \uncover<2-> { \> \sendmessageright{top=\text{$(D_i = g^{d_i}, E_i=g^{e_i})$}} \< \\ }
   \uncover<3-> { \< B=((1, D_1, E_1), \dots, (t, D_t, E_t)) \\}
   \uncover<4-> { \> \sendmessageleft{top=\text{$(m, B) $}}  \> \\ }
   \uncover<5-> { \rho_\ell = H_1(\ell, m, B), \ell \in S \\ }
@@ -554,12 +547,22 @@ absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{FROST Security Against ROS}
 
+  \begin{itemize}
+    \item<1-> An adversary can still find some $c^* = \sum_{j=1}^{k} H(R_j, \pk, m_j)  $
 
+    \item<2-> But it is difficult to do so while also finding some $\rho^*$ such that
 
+	    \[ \rho^*= H(B^*, \pk, m^*)  = \sum_{j=1}^k H(B_j, \pk, m_j) \]
 
-
-
+	Where $B_j$ completely defines $R_j$, such that
+	
+		  \[ \uncover<3-> {z_i^* = \sum_{j=1}^k z_{ij} = \sum d_{ij} + e_{ij} \cdot \rho_j  + \lambda_i \cdot \sk_i \cdot \sum c_j} \] 
+		  \[ \uncover<4-> { = \sum d_{ij} + e_{ij} \cdot \rho^* + \lambda_i \cdot \sk_i \cdot c^*} \]
+  \end{itemize}
+\end{frame}
 
 
 
@@ -569,11 +572,11 @@ absolute pointer = {(-2.8,-2.3)}] at (0,1) { $\sk = \sum \sk_i \lambda_i$, for $
   \frametitle{Takeaways}
 
   \begin{itemize}
-    \item Schnorr signatures are linear functions and so are simpler to thresholdize, but ROS attacks are viable.  
+    \item Schnorr signatures are simple to thresholdize, but ROS attacks are viable.  
     \item[]
-    \item ECDSA signatures are harder to thresholdize due to the requirement of performing multiplicative MPC. 
+    \item<2-> ECDSA signatures are harder to thresholdize due to their structure and lead to more complicated constructions. 
     \item[]
-    \item In general, patents in cryptography lead to hacks!
+    \item<3-> In general, patents in cryptography lead to convulted workarounds that persist long beyond the patent expires!
   \end{itemize}
 \end{frame}
 
